@@ -18,17 +18,6 @@ defmodule LipiaNgomaWeb.Router do
   end
 
   scope "/", LipiaNgomaWeb do
-    pipe_through :browser
-
-    live "/", HomeLive.Index, :index
-    live "/profile/:username", PageLive.Index, :index
-    live "/profile/:username/tips", PageLive.Tips, :index
-    live "/profile/:username/song_requests", PageLive.SongRequests, :index
-    live "/profile/:username/song_requests/new", PageLive.SongRequests, :new
-    live "/profile/:username/tips/new", PageLive.Tips, :new
-  end
-
-  scope "/", LipiaNgomaWeb do
     pipe_through [:browser, :require_authenticated_user]
 
     live "/tips", TipLive.Index, :index
@@ -109,5 +98,16 @@ defmodule LipiaNgomaWeb.Router do
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
+  end
+
+  scope "/", LipiaNgomaWeb do
+    pipe_through :browser
+
+    live "/", HomeLive.Index, :index
+    live "/:username", PageLive.Index, :index
+    live "/:username/tips", PageLive.Tips, :index
+    live "/:username/song_requests", PageLive.SongRequests, :index
+    live "/:username/song_requests/new", PageLive.SongRequests, :new
+    live "/:username/tips/new", PageLive.Tips, :new
   end
 end
