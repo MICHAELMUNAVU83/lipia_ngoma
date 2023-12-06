@@ -1,0 +1,27 @@
+<div>
+  Tips here for <%= @user.username %>
+</div>
+<span>
+  <%= live_patch("New Tip", to: Routes.page_tips_path(@socket, :new, @user.username)) %>
+</span>
+Tips added
+<%= for tip <- @tips.tips do %>
+  <p>
+    <%= tip.price %>
+    <%= tip.name %>
+  </p>
+<% end %>
+
+<%= if @live_action in [:new] do %>
+  <.modal return_to={Routes.page_tips_path(@socket, :index, @user.username)}>
+    <.live_component
+      module={LipiaNgomaWeb.TipLive.FormComponent}
+      id="tip"
+      title={@page_title}
+      action={@live_action}
+      tip={@tip}
+      user={@user}
+      return_to={Routes.page_tips_path(@socket, :index, @user.username)}
+    />
+  </.modal>
+<% end %>

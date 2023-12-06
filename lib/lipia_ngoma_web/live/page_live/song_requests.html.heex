@@ -1,0 +1,28 @@
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.page_song_requests_path(@socket, :index, @user.username)}>
+    <.live_component
+      module={LipiaNgomaWeb.SongRequestLive.FormComponent}
+      id={@song_request.id || :new}
+      title={@page_title}
+      user={@user}
+      action={@live_action}
+      song_request={@song_request}
+      return_to={Routes.page_song_requests_path(@socket, :index, @user.username)}
+    />
+  </.modal>
+<% end %>
+
+<p>
+  Song Requests for the user
+</p>
+
+<span>
+  <%= live_patch("New Song Request",
+    to: Routes.page_song_requests_path(@socket, :new, @user.username)
+  ) %>
+</span>
+<%= for song_request <- @song_requests_for_user do %>
+  <p>
+    <%= song_request.price %>
+  </p>
+<% end %>

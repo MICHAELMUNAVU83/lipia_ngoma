@@ -1,0 +1,49 @@
+<h1>Listing Tips</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.tip_index_path(@socket, :index)}>
+    <.live_component
+      module={LipiaNgomaWeb.TipLive.FormComponent}
+      id={@tip.id || :new}
+      title={@page_title}
+      action={@live_action}
+      tip={@tip}
+      return_to={Routes.tip_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone number</th>
+      <th>Price</th>
+      <th>Tipid</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="tips">
+    <%= for tip <- @tips do %>
+      <tr id={"tip-#{tip.id}"}>
+        <td><%= tip.name %></td>
+        <td><%= tip.phone_number %></td>
+        <td><%= tip.price %></td>
+        <td><%= tip.tipid %></td>
+
+        <td>
+          <span><%= live_patch("Edit", to: Routes.tip_index_path(@socket, :edit, tip)) %></span>
+          <span>
+            <%= link("Delete",
+              to: "#",
+              phx_click: "delete",
+              phx_value_id: tip.id,
+              data: [confirm: "Are you sure?"]
+            ) %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

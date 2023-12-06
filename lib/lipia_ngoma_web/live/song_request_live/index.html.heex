@@ -1,0 +1,58 @@
+<h1>Listing Song requests</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.song_request_index_path(@socket, :index)}>
+    <.live_component
+      module={LipiaNgomaWeb.SongRequestLive.FormComponent}
+      id={@song_request.id || :new}
+      title={@page_title}
+      action={@live_action}
+      user={@current_user}
+      song_request={@song_request}
+      return_to={Routes.song_request_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone number</th>
+      <th>Price</th>
+      <th>Is played</th>
+      <th>Is refunded</th>
+      <th>Songrequestid</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="song_requests">
+    <%= for song_request <- @song_requests do %>
+      <tr id={"song_request-#{song_request.id}"}>
+        <td><%= song_request.name %></td>
+        <td><%= song_request.phone_number %></td>
+        <td><%= song_request.price %></td>
+        <td><%= song_request.is_played %></td>
+        <td><%= song_request.is_refunded %></td>
+        <td><%= song_request.songrequestid %></td>
+
+        <td>
+          <span>
+            <%= live_patch("Edit",
+              to: Routes.song_request_index_path(@socket, :edit, song_request)
+            ) %>
+          </span>
+          <span>
+            <%= link("Delete",
+              to: "#",
+              phx_click: "delete",
+              phx_value_id: song_request.id,
+              data: [confirm: "Are you sure?"]
+            ) %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

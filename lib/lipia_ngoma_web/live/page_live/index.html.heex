@@ -1,0 +1,8 @@
+<div>
+  <div class="w-[100%] flex justify-center bg-gray-100 items-center h-[60vh]">
+    This is the page for <span class="text-2xl font-bold text-blue-500"><%= @user.email %></span>
+
+    <%= live_redirect("Add Tip", to: Routes.page_tips_path(@socket, :index, @user.username)) %>
+     <%= live_redirect("Add Song Request", to: Routes.page_song_requests_path(@socket, :index, @user.username)) %>
+  </div>
+</div>
