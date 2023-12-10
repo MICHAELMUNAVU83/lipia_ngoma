@@ -9,7 +9,9 @@ defmodule LipiaNgoma.Repo.Migrations.CreateSongRequests do
       add :is_played, :boolean, default: false, null: false
       add :is_refunded, :boolean, default: false, null: false
       add :songrequestid, :string
-      add :songname, :string
+      add :song_name, :string
+      add :artists, :string
+      add :image, :string
       add :user_id, references(:users, on_delete: :delete_all), null: false
 
       timestamps()

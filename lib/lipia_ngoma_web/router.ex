@@ -106,8 +106,9 @@ defmodule LipiaNgomaWeb.Router do
     live "/", HomeLive.Index, :index
     live "/:username", PageLive.Index, :index
     live "/:username/tips", PageLive.Tips, :index
-    live "/:username/song_requests", PageLive.SongRequests, :index
-    live "/:username/song_requests/new", PageLive.SongRequests, :new
+    live "/:username/songs", SongLive.Index, :index
+    live "/:username/:track_id/song_requests", PageLive.SongRequests, :index
+
     live "/:username/tips/success", PageLive.TipSuccess, :index
     live "/:username/song_requests/success", PageLive.SongRequestsSuccess, :index
   end

@@ -1,6 +1,7 @@
 defmodule LipiaNgomaWeb.PageLive.SongRequests do
   use LipiaNgomaWeb, :live_view
   alias LipiaNgoma.Users
+  alias LipiaNgoma.Spotify
   alias LipiaNgoma.ClubOfTheDays
   alias LipiaNgoma.SongRequests.SongRequest
   alias LipiaNgoma.SongRequests
@@ -13,8 +14,22 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :index, %{"username" => username}) do
+  defp apply_action(socket, :index, %{"username" => username, "track_id" => track_id}) do
     user = Users.get_user_by_username(username)
+
+    track = Spotify.get_track(track_id)
+
+    name_of_track = track["name"]
+
+    artists =
+      track["artists"]
+      |> Enum.map(fn artist -> artist["name"] end)
+      |> Enum.join(", ")
+
+    image =
+      track["album"]["images"]
+      |> List.first()
+      |> Map.get("url")
 
     socket
     |> assign(:user, user)
@@ -23,6 +38,9 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
       :return_to,
       Routes.page_song_requests_success_path(socket, :index, user.username)
     )
+    |> assign(:name_of_track, name_of_track)
+    |> assign(:artists, artists)
+    |> assign(:image, image)
     |> assign(:changeset, SongRequests.change_song_request(%SongRequest{}))
     |> assign(:page_title, "Add Song Requests for #{username} Home Page")
   end
@@ -37,7 +55,14 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
   end
 
   def handle_event("save", %{"song_request" => song_request_params}, socket) do
-    case SongRequests.create_song_request(song_request_params) do
+    new_song_request_params =
+      song_request_params
+      |> Map.put("artists", socket.assigns.artists)
+      |> Map.put("song_name", socket.assigns.name_of_track)
+      |> Map.put("image", socket.assigns.image)
+      |> Map.put("songrequestid", "edfvgbhj")
+
+    case SongRequests.create_song_request(new_song_request_params) do
       {:ok, _song_request} ->
         {:noreply,
          socket

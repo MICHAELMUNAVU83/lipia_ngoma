@@ -9,7 +9,10 @@ defmodule LipiaNgoma.SongRequests.SongRequest do
     field :is_played, :boolean, default: false
     field :is_refunded, :boolean, default: false
     field :songrequestid, :string
-    field :songname, :string
+    field :song_name, :string
+    field :artists, :string
+    field :image, :string
+
     belongs_to :user, LipiaNgoma.Users.User
 
     timestamps()
@@ -25,7 +28,9 @@ defmodule LipiaNgoma.SongRequests.SongRequest do
       :is_played,
       :is_refunded,
       :songrequestid,
-      :songname,
+      :song_name,
+      :artists,
+      :image,
       :user_id
     ])
     |> validate_required([
@@ -35,7 +40,9 @@ defmodule LipiaNgoma.SongRequests.SongRequest do
       :is_played,
       :is_refunded,
       :songrequestid,
-      :songname,
+      :song_name,
+      :artists,
+      :image,
       :user_id
     ])
   end

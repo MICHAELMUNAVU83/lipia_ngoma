@@ -1,8 +1,14 @@
-<div class="h-[100%] flex flex-col p-4 gap-2">
+<div class=" flex flex-col gap-2  overflow-y-scroll w-[90%] mx-auto">
   <div class="flex flex-col gap-2">
-    <p class="uppercase text-3xl text-white font-semibold">
-      Request A Song
+    <p class="uppercase text-2xl text-white font-semibold">
+      Request - <%= @name_of_track %>
     </p>
+
+    <div class="uppercase text-2xl flex gap-1 items-center text-white font-semibold">
+      <p>By</p>
+      <%= @artists %>
+    </div>
+
     <p class="h-[2px] w-[100%] bg-white" />
   </div>
 
@@ -10,19 +16,21 @@
     let={f}
     for={@changeset}
     id="song_request-form"
-    class="h-[90%] w-[100%]  flex flex-col gap-3"
+    class="h-[90%] w-[100%]  flex flex-col"
     phx-change="validate"
     phx-submit="save"
   >
+    <p class="text-white">
+      Fill in this form to pay with Mpesa
+    </p>
     <%= hidden_input(f, :user_id, value: @user.id) %>
-    <%= hidden_input(f, :songrequestid, value: "234rghfcgvhbj") %>
     <div class="flex flex-col gap-2">
       <%= label(f, :name, class: "text-white text-xl") %>
       <%= text_input(f, :name,
         class:
           "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
       ) %>
-      <p class="py-3">
+      <p class="py-2">
         <%= error_tag(f, :name) %>
       </p>
     </div>
@@ -33,7 +41,7 @@
         class:
           "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
       ) %>
-      <p class="py-3">
+      <p class="py-2">
         <%= error_tag(f, :phone_number) %>
       </p>
     </div>
@@ -44,19 +52,8 @@
         class:
           "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
       ) %>
-      <p class="py-3">
+      <p class="py-2">
         <%= error_tag(f, :price) %>
-      </p>
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <%= label(f, :song_name, class: "text-white text-xl", class: "text-white text-xl") %>
-      <%= text_input(f, :songname,
-        class:
-          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
-      ) %>
-      <p class="py-3">
-        <%= error_tag(f, :songname) %>
       </p>
     </div>
 

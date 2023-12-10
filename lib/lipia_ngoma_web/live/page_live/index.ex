@@ -12,7 +12,6 @@ defmodule LipiaNgomaWeb.PageLive.Index do
 
   defp apply_action(socket, :index, %{"username" => username}) do
     user = Users.get_user_by_username(username)
-    IO.inspect(user)
 
     socket
     |> assign(:page_title, "#{username} Home Page")

@@ -1,0 +1,43 @@
+<div class="h-[78vh] overflow-y-scroll w-[90%] mx-auto">
+  <p>
+    Search for a song then click on the song to proceed
+  </p>
+  <.form let={f} for={@changeset} class="w-[100%] mx-auto" phx_submit="search_song">
+    <%= text_input(f, :search,
+      placeholder: "Search for a song or artist..",
+      class:
+        "w-[70%] mx-auto h-[50px] focus:ring-green-500 focus:border-green-500 p-2 mb-2 border-2 border-gray-200 rounded-xl"
+    ) %>
+    <div>
+      <%= submit("Search", phx_disable_with: "Searching..") %>
+    </div>
+  </.form>
+  <div class="flex flex-col gap-2 ">
+    <%= for song <- @songs do %>
+      <%= live_redirect to: Routes.page_song_requests_path(@socket , :index , @user.username , song["data"]["id"]  ) do %>
+        <div class="flex flex-col gap-1 p-2 hover:bg-[#444344]/60 transition-all ease-in-out duration-500 cursor-pointer">
+          <div class="flex gap-2 items-start">
+            <img
+              src={hd(song["data"]["albumOfTrack"]["coverArt"]["sources"])["url"]}
+              class="w-[80px] h-[80px] object-cover"
+            />
+
+            <div class="flex flex-col text-white gap-2">
+              <p>
+                <%= song["data"]["name"] %>
+              </p>
+              <div class="flex gap-1 items-center">
+                <%= for artist <- song["data"]["artists"]["items"]  do %>
+                  <p>
+                    <%= artist["profile"]["name"] %>
+                  </p>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <p class="h-[1px] w-[100%] bg-white" />
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

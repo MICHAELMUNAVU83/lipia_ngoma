@@ -1,8 +1,8 @@
-<div class="flex flex-col w-[100%] h-[80vh] justify-center items-center text-center gap-8">
+<div class="flex flex-col w-[100%] h-[] justify-center items-center text-center gap-8">
   <p class="text-white">
     <%= @user.username %>
   </p>
-  <%= live_redirect(to: Routes.page_song_requests_path(@socket, :index, @user.username),class: "w-[80%] flex flex-col  mx-auto h-[200px]") do %>
+  <%= live_redirect(to: Routes.song_index_path(@socket, :index, @user.username),class: "w-[80%] flex flex-col  mx-auto h-[200px]") do %>
     <div class=" bg-gradient-to-tr from-[#C63676] to-[#8816AC] w-[100%] h-[150px] flex flex-col justify-center items-center rounded-t-3xl">
       <img src="/images/addsong.png" class="w-[100px] h-[100px] object-cover" />
     </div>
