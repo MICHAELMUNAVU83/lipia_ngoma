@@ -15,18 +15,18 @@ defmodule LipiaNgoma.TransactionAlgorithim do
       last_six_numbers <> last_ten_timestamp_numbers <> first_six_numbers
   end
 
-  def decode_user_id_from_transaction(transaction) do
-    case String.length(transaction) == 27 do
+  def decode_user_id_from_transaction(transaction_reference) do
+    case String.length(transaction_reference) == 27 do
       true ->
-        String.slice(transaction, 0..0)
+        String.slice(transaction_reference, 0..0)
 
       false ->
-        String.slice(transaction, 0..(String.length(transaction) - 27))
+        String.slice(transaction_reference, 0..(String.length(transaction_reference) - 27))
     end
   end
 
   def decode_phone_number_from_transaction(transaction) do
-    transaction_ref_without_user_id =
+    transaction_ref_without_location_id =
       case String.length(transaction) == 27 do
         true ->
           String.slice(transaction, 1..26)
@@ -38,10 +38,12 @@ defmodule LipiaNgoma.TransactionAlgorithim do
           )
       end
 
-    last_six_numbers = String.slice(transaction_ref_without_user_id, 4..9)
+    last_six_numbers = String.slice(transaction_ref_without_location_id, 4..9)
 
-    first_six_numbers = String.slice(transaction_ref_without_user_id, 20..25)
+    first_six_numbers = String.slice(transaction_ref_without_location_id, 20..25)
 
     first_six_numbers <> last_six_numbers
   end
+
+  
 end

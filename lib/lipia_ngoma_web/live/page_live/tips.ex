@@ -2,6 +2,8 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
   use LipiaNgomaWeb, :live_view
   alias LipiaNgoma.Users
   alias LipiaNgoma.Tips.Tip
+  alias LipiaNgoma.Chpter
+  alias LipiaNgoma.TransactionAlgorithim
   alias LipiaNgoma.Tips
 
   def mount(_params, _session, socket) do
@@ -39,14 +41,85 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
   end
 
   def handle_event("save", %{"tip" => tip_params}, socket) do
-    case Tips.create_tip(tip_params) do
-      {:ok, _tip} ->
+    transaction_reference =
+      TransactionAlgorithm.code_reference_for_transaction(
+        socket.assigns.user.id,
+        tip_params["phone_number"]
+      )
+
+    case Chpter.initiate_payment(
+           "pk_ed5555e00579aaa99fa4a9ed6b8078559256e3987730e737bdcf9334ead73a51",
+           tip_params["phone_number"],
+           tip_params["name"],
+           "test@gmail.com",
+           tip_params["price"],
+           "Nairobi",
+           "https://16ae-105-163-157-168.ngrok-free.app/api/transactions",
+           transaction_reference
+         ) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        customer_record =
+          Chpter.check_for_payment(
+            transaction_reference,
+            "https://16ae-105-163-157-168.ngrok-free.app/api/transactions"
+          )
+
+        new_tip_params =
+          tip_params
+          |> Map.put("tipid", transaction_reference)
+
+        if customer_record["success"] == true do
+          case Tips.create_tip(tip_params) do
+            {:ok, _tip} ->
+              {:noreply,
+               socket
+               |> push_redirect(to: socket.assigns.return_to)}
+
+            {:error, %Ecto.Changeset{} = changeset} ->
+              {:noreply, assign(socket, changeset: changeset)}
+          end
+        else
+          {:noreply,
+           socket
+           |> put_flash(:error, "Payment Failed , #{customer_record["message"]}")}
+        end
+
+      {:error, %HTTPoison.Error{reason: :timeout, id: nil}} ->
+        customer_record =
+          Chpter.check_for_payment(
+            transaction_reference,
+            "https://16ae-105-163-157-168.ngrok-free.app/api/transactions"
+          )
+
+        new_tip_params =
+          tip_params
+          |> Map.put("tipid", transaction_reference)
+
+        if customer_record["success"] == true do
+          case Tips.create_tip(tip_params) do
+            {:ok, _tip} ->
+              {:noreply,
+               socket
+               |> push_redirect(to: socket.assigns.return_to)}
+
+            {:error, %Ecto.Changeset{} = changeset} ->
+              {:noreply, assign(socket, changeset: changeset)}
+          end
+        else
+          {:noreply,
+           socket
+           |> put_flash(:error, "Payment Failed , #{customer_record["message"]}")}
+        end
+
+      {:ok, %HTTPoison.Response{status_code: 400, body: body}} ->
         {:noreply,
          socket
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> put_flash(:error, "Payment Failed")}
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Payment Failed , Timeout error")}
     end
   end
 end
