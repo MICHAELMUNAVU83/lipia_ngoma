@@ -1,8 +1,22 @@
-<div>
-  <div class="w-[100%] flex justify-center bg-gray-100 items-center h-[60vh]">
-    This is the page for <span class="text-2xl font-bold text-blue-500"><%= @user.email %></span>
+<div class="flex flex-col w-[100%] h-[80vh] justify-center items-center text-center gap-8">
+  <p class="text-white">
+    <%= @user.username %>
+  </p>
+  <%= live_redirect(to: Routes.page_song_requests_path(@socket, :index, @user.username),class: "w-[80%] flex flex-col  mx-auto h-[200px]") do %>
+    <div class=" bg-gradient-to-tr from-[#C63676] to-[#8816AC] w-[100%] h-[150px] flex flex-col justify-center items-center rounded-t-3xl">
+      <img src="/images/addsong.png" class="w-[100px] h-[100px] object-cover" />
+    </div>
+    <div class="bg-black h-[50px] rounded-b-3xl flex flex-col justify-center items-center text-white text-2xl  w-[100%]">
+      request a song
+    </div>
+  <% end %>
 
-    <%= live_redirect("Add Tip", to: Routes.page_tips_path(@socket, :index, @user.username)) %>
-     <%= live_redirect("Add Song Request", to: Routes.page_song_requests_path(@socket, :index, @user.username)) %>
-  </div>
+  <%= live_redirect(to: Routes.page_tips_path(@socket, :index, @user.username),class: "w-[80%] flex flex-col  mx-auto h-[200px]") do %>
+    <div class=" bg-gradient-to-tr from-[#C63676] to-[#8816AC] w-[100%] h-[150px] flex flex-col justify-center items-center rounded-t-3xl">
+      <img src="/images/tip.png" class="w-[100px] h-[100px] object-cover" />
+    </div>
+    <div class="bg-black h-[50px] rounded-b-3xl flex flex-col justify-center items-center text-white text-2xl  w-[100%]">
+      add a tip
+    </div>
+  <% end %>
 </div>

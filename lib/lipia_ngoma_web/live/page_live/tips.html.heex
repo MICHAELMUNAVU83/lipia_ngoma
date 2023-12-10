@@ -1,27 +1,32 @@
-<div>
-  Tips here for <%= @user.username %>
-</div>
-<span>
-  <%= live_patch("New Tip", to: Routes.page_tips_path(@socket, :new, @user.username)) %>
-</span>
-Tips added
-<%= for tip <- @tips.tips do %>
-  <p>
-    <%= tip.price %>
-    <%= tip.name %>
-  </p>
-<% end %>
+<div class="h-[100%]">
+  <.form
+    let={f}
+    for={@changeset}
+    class="h-[90%]"
+    id="tip-form"
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <%= hidden_input(f, :user_id, value: @user.id) %>
 
-<%= if @live_action in [:new] do %>
-  <.modal return_to={Routes.page_tips_path(@socket, :index, @user.username)}>
-    <.live_component
-      module={LipiaNgomaWeb.TipLive.FormComponent}
-      id="tip"
-      title={@page_title}
-      action={@live_action}
-      tip={@tip}
-      user={@user}
-      return_to={Routes.page_tips_path(@socket, :index, @user.username)}
-    />
-  </.modal>
-<% end %>
+    <%= label(f, :name) %>
+    <%= text_input(f, :name) %>
+    <%= error_tag(f, :name) %>
+
+    <%= label(f, :phone_number) %>
+    <%= text_input(f, :phone_number) %>
+    <%= error_tag(f, :phone_number) %>
+
+    <%= label(f, :price) %>
+    <%= number_input(f, :price) %>
+    <%= error_tag(f, :price) %>
+
+    <%= label(f, :tipid) %>
+    <%= text_input(f, :tipid) %>
+    <%= error_tag(f, :tipid) %>
+
+    <div>
+      <%= submit("Save", phx_disable_with: "Saving...") %>
+    </div>
+  </.form>
+</div>

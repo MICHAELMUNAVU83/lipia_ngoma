@@ -17,6 +17,17 @@ config :lipia_ngoma, LipiaNgomaWeb.Endpoint,
   pubsub_server: LipiaNgoma.PubSub,
   live_view: [signing_salt: "r9UNa5lF"]
 
+config :tailwind,
+  version: "3.3.6",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
