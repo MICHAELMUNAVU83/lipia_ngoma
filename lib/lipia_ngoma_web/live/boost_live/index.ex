@@ -45,14 +45,21 @@ defmodule LipiaNgomaWeb.BoostLive.Index do
     new_boost_params =
       boost_params
       |> Map.put("song_request_id", socket.assigns.song_request.id)
-      |> Map.put("boostid", "etg")
+      |> Map.put("boostid", "etgyvhbj")
 
     case Boosts.create_boost(new_boost_params) do
-      {:ok, _boost} ->
+      {:ok, boost} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Boost created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_redirect(
+           to:
+             Routes.boost_success_path(
+               LipiaNgomaWeb.Endpoint,
+               :index,
+               socket.assigns.user.username,
+               boost.id
+             )
+         )}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

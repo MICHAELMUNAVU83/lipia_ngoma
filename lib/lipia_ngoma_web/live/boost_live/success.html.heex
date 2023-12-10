@@ -1,0 +1,19 @@
+<div class="flex flex-col h-[80vh] justify-center items-center gap-4">
+  <img src="/images/requestsuccess.png" class="w-[150px] h-[200px] object-cover" />
+  <div class="flex flex-col text-white text-center gap-2">
+    <p class="font-semibold text-2xl">
+      Nice !
+    </p>
+    <p class="text-xl w-[90%] mx-auto">
+      <%= @boost.song_request.song_name %> has been moved to #1
+    </p>
+  </div>
+
+  <div class="flex justify-center items-center">
+    <p class="text-white uppercase underline text-xl">
+      <%= live_redirect to: Routes.page_index_path(@socket , :index, @user.username) do %>
+        back
+      <% end %>
+    </p>
+  </div>
+</div>

@@ -113,6 +113,6 @@ defmodule LipiaNgomaWeb.Router do
     live "/:username/song_requests/success/:song_request_id", PageLive.SongRequestsSuccess, :index
 
     live "/:username/boosts/:song_request_id", BoostLive.Index, :index
-
+    live "/:username/boostsuccess/:boost_id", BoostLive.Success, :index
   end
 end

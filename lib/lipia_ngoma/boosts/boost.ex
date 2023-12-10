@@ -9,6 +9,7 @@ defmodule LipiaNgoma.Boosts.Boost do
     field :boostid, :string
     belongs_to :user, LipiaNgoma.Users.User
     belongs_to :song_request, LipiaNgoma.SongRequests.SongRequest
+    
 
     timestamps()
   end

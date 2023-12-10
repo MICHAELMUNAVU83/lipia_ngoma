@@ -35,7 +35,7 @@ defmodule LipiaNgoma.Boosts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_boost!(id), do: Repo.get!(Boost, id)
+  def get_boost!(id), do: Repo.get!(Boost, id) |> Repo.preload(:song_request)
 
   @doc """
   Creates a boost.
