@@ -1,11 +1,10 @@
 <div class=" flex flex-col gap-2  overflow-y-scroll w-[90%] mx-auto">
   <div class="flex flex-col gap-2">
-    <p class="uppercase text-2xl text-white font-semibold">
+    <p class="uppercase md:text-2xl text-white font-semibold">
       Request - <%= @name_of_track %>
     </p>
 
-    <div class="uppercase text-2xl flex gap-1 items-center text-white font-semibold">
-      <p>By</p>
+    <div class="uppercase md:text-2xl flex gap-1 items-center text-white font-semibold">
       <%= @artists %>
     </div>
 
@@ -25,10 +24,11 @@
     </p>
     <%= hidden_input(f, :user_id, value: @user.id) %>
     <div class="flex flex-col gap-2">
-      <%= label(f, :name, class: "text-white text-xl") %>
+      <%= label(f, :full_name, class: "text-white text-xl") %>
       <%= text_input(f, :name,
         class:
-          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+        placeholder: "Enter your full name"
       ) %>
       <p class="py-2">
         <%= error_tag(f, :name) %>
@@ -39,7 +39,8 @@
       <%= label(f, :phone_number, class: "text-white text-xl") %>
       <%= text_input(f, :phone_number,
         class:
-          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+        placeholder: "Enter your phone number"
       ) %>
       <p class="py-2">
         <%= error_tag(f, :phone_number) %>
@@ -50,7 +51,8 @@
       <%= label(f, :price, class: "text-white text-xl") %>
       <%= number_input(f, :price,
         class:
-          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+        placeholder: "Enter the amount in "
       ) %>
       <p class="py-2">
         <%= error_tag(f, :price) %>
@@ -67,7 +69,7 @@
   </.form>
   <div class="flex justify-center items-center">
     <p class="text-white uppercase underline text-xl">
-      <%= live_redirect to: Routes.page_index_path(@socket , :index, @user.username) do %>
+      <%= live_redirect to: Routes.song_index_path(@socket , :index, @user.username) do %>
         back
       <% end %>
     </p>

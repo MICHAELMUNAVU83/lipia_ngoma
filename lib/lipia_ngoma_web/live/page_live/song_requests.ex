@@ -34,10 +34,6 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
     socket
     |> assign(:user, user)
     |> assign(:song_request, %SongRequest{})
-    |> assign(
-      :return_to,
-      Routes.page_song_requests_success_path(socket, :index, user.username)
-    )
     |> assign(:name_of_track, name_of_track)
     |> assign(:artists, artists)
     |> assign(:image, image)
@@ -60,13 +56,21 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
       |> Map.put("artists", socket.assigns.artists)
       |> Map.put("song_name", socket.assigns.name_of_track)
       |> Map.put("image", socket.assigns.image)
-      |> Map.put("songrequestid", "edfvgbhj")
+      |> Map.put("songrequestid", "etg")
 
     case SongRequests.create_song_request(new_song_request_params) do
-      {:ok, _song_request} ->
+      {:ok, song_request} ->
         {:noreply,
          socket
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_redirect(
+           to:
+             Routes.page_song_requests_success_path(
+               LipiaNgomaWeb.Endpoint,
+               :index,
+               socket.assigns.user.username,
+               song_request.id
+             )
+         )}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
