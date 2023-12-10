@@ -12,13 +12,15 @@ defmodule LipiaNgomaWeb.PageLive.SongRequestsSuccess do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :index, %{"username" => username}) do
+  defp apply_action(socket, :index, %{
+         "username" => username,
+         "song_request_id" => song_request_id
+       }) do
     user = Users.get_user_by_username(username)
-
-    tips = Users.get_user_tips(username)
 
     socket
     |> assign(:user, user)
+    |> assign(:song_request_id, song_request_id)
     |> assign(:page_title, "Success Tip for #{username} ")
   end
 end

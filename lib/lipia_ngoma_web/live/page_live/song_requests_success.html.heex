@@ -14,7 +14,7 @@
 
   <div class="flex justify-center text-xl items-center">
     <div class="border-2 border-[#FFFFFF] text-white rounded-3xl p-2 hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer">
-      <%= live_redirect to: Routes.page_index_path(@socket , :index, @user.username) do %>
+      <%= live_redirect to: Routes.boost_index_path(@socket , :index, @user.username, @song_request_id) do %>
         Boost your request
       <% end %>
     </div>

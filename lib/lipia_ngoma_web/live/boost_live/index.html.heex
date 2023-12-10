@@ -1,0 +1,77 @@
+<div class=" flex flex-col gap-2  overflow-y-scroll w-[90%] mx-auto">
+  <div class="flex flex-col gap-2">
+    <p class="uppercase md:text-2xl text-white font-semibold">
+      Boost - <%= @song_request.song_name %>
+    </p>
+
+    <div class="uppercase md:text-2xl flex gap-1 items-center text-white font-semibold">
+      <%= @song_request.artists %>
+    </div>
+
+    <p class="h-[2px] w-[100%] bg-white" />
+  </div>
+
+  <.form
+    let={f}
+    for={@changeset}
+    id="boost-form"
+    class="h-[90%] w-[100%]  flex flex-col"
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <p class="text-white">
+      * currently at #2 requested for KSHS 1500
+    </p>
+    <%= hidden_input(f, :user_id, value: @user.id) %>
+    <div class="flex flex-col gap-2">
+      <%= label(f, :full_name, class: "text-white text-xl") %>
+      <%= text_input(f, :name,
+        class:
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+        placeholder: "Enter your full name"
+      ) %>
+      <p class="py-2">
+        <%= error_tag(f, :name) %>
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <%= label(f, :phone_number, class: "text-white text-xl") %>
+      <%= text_input(f, :phone_number,
+        class:
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+        placeholder: "Enter your phone number"
+      ) %>
+      <p class="py-2">
+        <%= error_tag(f, :phone_number) %>
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <%= label(f, :price, class: "text-white text-xl") %>
+      <%= number_input(f, :price,
+        class:
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+        placeholder: "Enter the amount you want to boost  "
+      ) %>
+      <p class="py-2">
+        <%= error_tag(f, :price) %>
+      </p>
+    </div>
+
+    <div class="flex justify-center  text-white text-xl items-center">
+      <%= submit("Boost",
+        phx_disable_with: "Processing...",
+        class:
+          "border-2 border-[#FFFFFF] rounded-3xl p-2 hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer"
+      ) %>
+    </div>
+  </.form>
+  <div class="flex justify-center items-center">
+    <p class="text-white uppercase underline text-xl">
+      <%= live_redirect to: Routes.page_index_path(@socket , :index, @user.username) do %>
+        back
+      <% end %>
+    </p>
+  </div>
+</div>
