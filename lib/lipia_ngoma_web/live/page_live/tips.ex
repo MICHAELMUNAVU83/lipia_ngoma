@@ -21,6 +21,10 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
     |> assign(:user, user)
     |> assign(:tip, %Tip{})
     |> assign(:changeset, Tips.change_tip(%Tip{}))
+    |> assign(
+      :return_to,
+      Routes.page_tip_success_path(socket, :index, user.username)
+    )
     |> assign(:tips, tips)
     |> assign(:page_title, "Add tips for #{username} Home Page")
   end
@@ -35,15 +39,10 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
   end
 
   def handle_event("save", %{"tip" => tip_params}, socket) do
-    save_tip(socket, socket.assigns.action, tip_params)
-  end
-
-  defp save_tip(socket, :tips, tip_params) do
     case Tips.create_tip(tip_params) do
       {:ok, _tip} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Tip created successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
