@@ -16,23 +16,35 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
   defp apply_action(socket, :index, %{"username" => username}) do
     user = Users.get_user_by_username(username)
 
-    song_requests_for_user = SongRequests.list_song_requests_for_a_user(user.id)
-
     socket
     |> assign(:user, user)
-    |> assign(:song_requests_for_user, song_requests_for_user)
+    |> assign(:song_request, %SongRequest{})
+    |> assign(
+      :return_to,
+      Routes.page_song_requests_success_path(socket, :index, user.username)
+    )
+    |> assign(:changeset, SongRequests.change_song_request(%SongRequest{}))
     |> assign(:page_title, "Add Song Requests for #{username} Home Page")
   end
 
-  defp apply_action(socket, :new, %{"username" => username}) do
-    user = Users.get_user_by_username(username)
+  def handle_event("validate", %{"song_request" => song_request_params}, socket) do
+    changeset =
+      socket.assigns.song_request
+      |> SongRequests.change_song_request(song_request_params)
+      |> Map.put(:action, :validate)
 
-    song_requests_for_user = SongRequests.list_song_requests_for_a_user(user.id)
+    {:noreply, assign(socket, :changeset, changeset)}
+  end
 
-    socket
-    |> assign(:user, user)
-    |> assign(:song_requests_for_user, song_requests_for_user)
-    |> assign(:song_request, %SongRequest{})
-    |> assign(:page_title, "Add Song Requests for #{username} Home Page")
+  def handle_event("save", %{"song_request" => song_request_params}, socket) do
+    case SongRequests.create_song_request(song_request_params) do
+      {:ok, _song_request} ->
+        {:noreply,
+         socket
+         |> push_redirect(to: socket.assigns.return_to)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
   end
 end

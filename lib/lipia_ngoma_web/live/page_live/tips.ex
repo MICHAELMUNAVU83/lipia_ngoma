@@ -38,20 +38,7 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
     save_tip(socket, socket.assigns.action, tip_params)
   end
 
-  defp save_tip(socket, :edit, tip_params) do
-    case Tips.update_tip(socket.assigns.tip, tip_params) do
-      {:ok, _tip} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Tip updated successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, :changeset, changeset)}
-    end
-  end
-
-  defp save_tip(socket, :new, tip_params) do
+  defp save_tip(socket, :tips, tip_params) do
     case Tips.create_tip(tip_params) do
       {:ok, _tip} ->
         {:noreply,

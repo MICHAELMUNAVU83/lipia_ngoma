@@ -21,7 +21,7 @@
       <div class="h-[8vh]">
         <%= render("_user_menu.html", assigns) %>
       </div>
-      <div class="w-[100%] h-[92vh]">
+      <div class="w-[100%]  h-[92vh]">
         <%= @inner_content %>
       </div>
 
@@ -35,7 +35,7 @@
         <% end %>
 
         <%= link to: Routes.page_index_path(@conn , :index, @user.username), class: "flex flex-col items-center justify-center " do %>
-          <img src="/images/line.png" class="h-[32px] w-[32px] object-contain" />
+          <img src="/images/line.png" class="h-[28px] w-[28px] object-contain" />
 
           <p class="text-white">
             Queue
