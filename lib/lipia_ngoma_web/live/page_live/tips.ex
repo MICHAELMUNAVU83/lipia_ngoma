@@ -19,6 +19,7 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
 
     socket
     |> assign(:user, user)
+    |> assign(:tip, %Tip{})
     |> assign(:changeset, Tips.change_tip(%Tip{}))
     |> assign(:tips, tips)
     |> assign(:page_title, "Add tips for #{username} Home Page")

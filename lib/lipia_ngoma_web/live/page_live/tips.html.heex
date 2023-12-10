@@ -1,32 +1,68 @@
-<div class="h-[100%]">
+<div class="h-[100%] flex flex-col p-4 gap-2">
+  <div class="flex flex-col gap-2">
+    <p class="uppercase text-3xl text-white font-semibold">
+      Send a tip
+    </p>
+    <p class="h-[2px] w-[100%] bg-white" />
+  </div>
   <.form
     let={f}
     for={@changeset}
-    class="h-[90%]"
+    class="h-[90%] w-[100%] flex flex-col gap-3"
     id="tip-form"
     phx-change="validate"
     phx-submit="save"
   >
     <%= hidden_input(f, :user_id, value: @user.id) %>
-
-    <%= label(f, :name) %>
-    <%= text_input(f, :name) %>
-    <%= error_tag(f, :name) %>
-
-    <%= label(f, :phone_number) %>
-    <%= text_input(f, :phone_number) %>
-    <%= error_tag(f, :phone_number) %>
-
-    <%= label(f, :price) %>
-    <%= number_input(f, :price) %>
-    <%= error_tag(f, :price) %>
-
-    <%= label(f, :tipid) %>
-    <%= text_input(f, :tipid) %>
-    <%= error_tag(f, :tipid) %>
+    <%= hidden_input(f, :tipid, value: "123") %>
+    <div class="flex flex-col gap-2">
+      <%= label(f, :name, class: "text-white text-xl") %>
+      <%= text_input(
+        f,
+        :name,
+        class:
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+      ) %>
+      <p class="py-3">
+        <%= error_tag(f, :name) %>
+      </p>
+    </div>
+    <div>
+      <%= label(f, :phone_number, class: "text-white text-xl") %>
+      <%= text_input(f, :phone_number,
+        class:
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+      ) %>
+      <p class="py-3">
+        <%= error_tag(f, :phone_number) %>
+      </p>
+    </div>
 
     <div>
-      <%= submit("Save", phx_disable_with: "Saving...") %>
+      <%= label(f, :amount_in_kes, class: "text-white text-xl") %>
+      <%= number_input(f, :price,
+        class:
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+      ) %>
+      <p class="py-3 text">
+        <%= error_tag(f, :price) %>
+      </p>
+    </div>
+
+    <div class="flex justify-center  text-white text-xl items-center">
+      <%= submit("Send Money",
+        phx_disable_with: "Sending Money...",
+        class:
+          "border-2 border-[#FFFFFF] rounded-3xl p-2 hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer"
+      ) %>
     </div>
   </.form>
+
+  <div class="flex justify-center items-center">
+    <p class="text-white uppercase underline text-xl">
+      <%= live_redirect to: Routes.page_index_path(@socket , :index, @user.username) do %>
+        back
+      <% end %>
+    </p>
+  </div>
 </div>
