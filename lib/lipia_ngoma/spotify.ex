@@ -2,6 +2,8 @@ defmodule LipiaNgoma.Spotify do
   def initiate_search(query) do
     header = header()
 
+    query = String.replace(query, " ", "%20")
+
     url =
       "https://api.spotify.com/v1/search?q=#{query}&type=album%2Cartist%2Ctrack"
 
