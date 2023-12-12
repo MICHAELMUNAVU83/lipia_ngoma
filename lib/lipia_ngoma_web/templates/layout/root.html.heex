@@ -16,33 +16,6 @@
     </script>
   </head>
   <body>
-    <div class="h-[100vh] w-[100%] bg-gradient-to-tr from-[#CF3030] to-[#430E81] flex justify-between items-center flex-col  ">
-      <div class="h-[10vh]">
-        <%= render("_user_menu.html", assigns) %>
-      </div>
-      <div class="w-[100%]  h-[80vh]">
-        <%= @inner_content %>
-      </div>
-
-      <%= if @current_user do %>
-        <div class="h-[10vh] bg-[#444344]/60 w-[100%] flex justify-between items-center px-16 rounded-t-3xl">
-          <%= link to: Routes.page_index_path(@conn , :index, @user.username), class: "flex flex-col items-center justify-center " do %>
-            <img src="/images/home.png" class="h-[32px] w-[32px] object-contain" />
-
-            <p class="text-white">
-              Home
-            </p>
-          <% end %>
-
-          <%= link to: Routes.page_index_path(@conn , :index, @user.username), class: "flex flex-col items-center justify-center " do %>
-            <img src="/images/line.png" class="h-[28px] w-[28px] object-contain" />
-
-            <p class="text-white">
-              Queue
-            </p>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <%= @inner_content %>
   </body>
 </html>

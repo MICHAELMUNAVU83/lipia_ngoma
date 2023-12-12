@@ -45,26 +45,26 @@ defmodule LipiaNgomaWeb.BoostLive.Index do
 
   def handle_event("save", %{"boost" => boost_params}, socket) do
     transaction_reference =
-      TransactionAlgorithm.code_reference_for_transaction(
-        socket.assigns.user.id,
+      TransactionAlgorithim.code_reference_for_transaction(
+        Integer.to_string(socket.assigns.user.id),
         boost_params["phone_number"]
       )
 
     case Chpter.initiate_payment(
-           "pk_ed5555e00579aaa99fa4a9ed6b8078559256e3987730e737bdcf9334ead73a51",
+           "pk_4aff02227456f6b499820c2621ae181c9e35666d25865575fef47622265dcbb9",
            boost_params["phone_number"],
            boost_params["name"],
            "test@gmail.com",
-           boost_params["price"],
+           String.to_integer(boost_params["price"]),
            "Nairobi",
-           "https://16ae-105-163-157-168.ngrok-free.app/api/transactions",
+           "https://1ccf-102-135-174-116.ngrok-free.app/api/transactions",
            transaction_reference
          ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         customer_record =
           Chpter.check_for_payment(
             transaction_reference,
-            "https://16ae-105-163-157-168.ngrok-free.app/api/transactions"
+            "https://1ccf-102-135-174-116.ngrok-free.app/api/transactions"
           )
 
         new_boost_params =

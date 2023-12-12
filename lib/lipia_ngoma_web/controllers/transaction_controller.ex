@@ -34,8 +34,10 @@ defmodule LipiaNgomaWeb.TransactionController do
       "transaction_reference" => transaction_params["transaction_reference"]
     }
 
+    IO.inspect(new_transaction_params)
+
     with {:ok, %Transaction{} = transaction} <-
-           Transactions.create_transaction(new_transaction_params) do
+           IO.inspect(Transactions.create_transaction(new_transaction_params)) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.transaction_path(conn, :show, transaction))

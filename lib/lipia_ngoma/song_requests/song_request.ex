@@ -45,5 +45,10 @@ defmodule LipiaNgoma.SongRequests.SongRequest do
       :image,
       :user_id
     ])
+    |> validate_format(
+      :phone_number,
+      ~r/^254\d{9}$/,
+      message: "Number has to start with 254 and have 12 digits"
+    )
   end
 end

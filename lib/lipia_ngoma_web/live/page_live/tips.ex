@@ -43,7 +43,7 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
   def handle_event("save", %{"tip" => tip_params}, socket) do
     transaction_reference =
       TransactionAlgorithm.code_reference_for_transaction(
-        socket.assigns.user.id,
+        Integer.to_string(socket.assigns.user.id),
         tip_params["phone_number"]
       )
 
@@ -52,7 +52,7 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
            tip_params["phone_number"],
            tip_params["name"],
            "test@gmail.com",
-           tip_params["price"],
+           String.to_integer(tip_params["price"]),
            "Nairobi",
            "https://16ae-105-163-157-168.ngrok-free.app/api/transactions",
            transaction_reference

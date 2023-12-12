@@ -79,6 +79,21 @@ defmodule LipiaNgoma.SongRequests do
     |> Repo.update()
   end
 
+  def search(query, id) do
+    if query == "" || query == nil do
+      list_song_requests_for_a_user(id)
+    else
+      list_song_requests_for_a_user(id)
+      |> Enum.filter(fn song ->
+        String.contains?(String.downcase(song.song_name), String.downcase(query)) or
+          String.contains?(
+            String.downcase(song.artists),
+            String.downcase(query)
+          )
+      end)
+    end
+  end
+
   @doc """
   Deletes a song_request.
 

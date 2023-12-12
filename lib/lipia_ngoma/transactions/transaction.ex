@@ -30,7 +30,6 @@ defmodule LipiaNgoma.Transactions.Transaction do
     ])
     |> validate_required([
       :message,
-      :amount,
       :status,
       :success,
       :transaction_reference,

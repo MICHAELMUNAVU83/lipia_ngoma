@@ -7,40 +7,34 @@ defmodule LipiaNgomaWeb.SongRequestLive.Index do
 
   @impl true
   def mount(_params, session, socket) do
-    current_user = Users.get_user_by_session_token(session["user_token"])
+    {:ok, socket |> assign(:changeset, SongRequests.change_song_request(%SongRequest{}))}
+  end
 
-    {:ok,
+  @impl true
+
+  def handle_params(params, _, socket) do
+    user = Users.get_user_by_username(params["username"])
+
+    songs =
+      if params["q"] do
+        SongRequests.search(params["q"], user.id)
+      else
+        SongRequests.list_song_requests_for_a_user(user.id)
+      end
+
+    {:noreply,
      socket
-     |> assign(:current_user, current_user)
-     |> assign(:song_requests, list_song_requests(current_user.id))}
+     |> assign(:username, params["username"])
+     |> assign(:user, user)
+     |> assign(:songs, songs)
+     |> assign(:page_title, "SongRequests for #{params["username"]}")}
   end
 
-  @impl true
-  def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  end
-
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit Song request")
-    |> assign(:song_request, SongRequests.get_song_request!(id))
-  end
-
-  defp apply_action(socket, :index, _params) do
-    socket
-    |> assign(:page_title, "Listing Song requests")
-    |> assign(:song_request, nil)
-  end
-
-  @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    song_request = SongRequests.get_song_request!(id)
-    {:ok, _} = SongRequests.delete_song_request(song_request)
-
-    {:noreply, assign(socket, :song_requests, list_song_requests(socket.assigns.current_user.id))}
-  end
-
-  defp list_song_requests(id) do
-    SongRequests.list_song_requests_for_a_user(id)
+  def handle_event("search_song", params, socket) do
+    {:noreply,
+     socket
+     |> push_patch(
+       to: "/#{socket.assigns.username}/song_requests/?q=#{params["song_request"]["search"]}"
+     )}
   end
 end

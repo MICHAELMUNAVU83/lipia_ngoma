@@ -1,11 +1,47 @@
-<main >
-  <p class="alert alert-info" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+<main>
+  <%= if @flash["info"] do %>
+    <p
+      class="alert alert-info hideMsg"
+      role="alert"
+      phx-click="lv:clear-flash"
+      phx-value-key="info"
+    >
+      <%= live_flash(@flash, :info) %>
+    </p>
+  <% end %>
 
-  <p class="alert alert-danger" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+  <%= if @flash["error"] do %>
+    <p
+      class="alert alert-danger hideMsg"
+      role="alert"
+      phx-click="lv:clear-flash"
+      phx-value-key="error"
+    >
+      <%= live_flash(@flash, :error) %>
+    </p>
+  <% end %>
 
-  <%= @inner_content %>
+  <div class="h-[100vh] w-[100%] bg-gradient-to-tr from-[#CF3030] to-[#430E81] flex justify-between items-center flex-col  ">
+    <div class="w-[100%] pt-8  h-[90vh]">
+      <%= @inner_content %>
+    </div>
+
+    <div class="h-[10vh] bg-[#444344]/60 w-[100%] flex justify-between items-center px-16 rounded-t-3xl">
+      <%= link to: Routes.page_index_path(@socket , :index, @user.username), class: "flex flex-col items-center justify-center " do %>
+        <img src="/images/home.png" class="h-[32px] w-[32px] object-contain" />
+
+        <p class="text-white">
+          Home
+        </p>
+      <% end %>
+
+      <%= link to: Routes.song_request_index_path(@socket , :index, @user.username), class: "flex flex-col items-center justify-center " do %>
+        <img src="/images/line.png" class="h-[28px] w-[28px] object-contain" />
+
+        <p class="text-white">
+          Queue
+        </p>
+      <% end %>
+    </div>
+  </div>
 </main>

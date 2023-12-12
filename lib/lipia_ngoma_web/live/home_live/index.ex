@@ -1,5 +1,5 @@
 defmodule LipiaNgomaWeb.HomeLive.Index do
-  use LipiaNgomaWeb, :live_view
+  use LipiaNgomaWeb, :home_live_view
   alias LipiaNgoma.Users
 
   def mount(_params, session, socket) do
