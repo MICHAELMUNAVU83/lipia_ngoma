@@ -24,23 +24,25 @@
         <%= @inner_content %>
       </div>
 
-      <div class="h-[10vh] bg-[#444344]/60 w-[100%] flex justify-between items-center px-16 rounded-t-3xl">
-        <%= link to: Routes.page_index_path(@conn , :index, @user.username), class: "flex flex-col items-center justify-center " do %>
-          <img src="/images/home.png" class="h-[32px] w-[32px] object-contain" />
+      <%= if @current_user do %>
+        <div class="h-[10vh] bg-[#444344]/60 w-[100%] flex justify-between items-center px-16 rounded-t-3xl">
+          <%= link to: Routes.page_index_path(@conn , :index, @user.username), class: "flex flex-col items-center justify-center " do %>
+            <img src="/images/home.png" class="h-[32px] w-[32px] object-contain" />
 
-          <p class="text-white">
-            Home
-          </p>
-        <% end %>
+            <p class="text-white">
+              Home
+            </p>
+          <% end %>
 
-        <%= link to: Routes.page_index_path(@conn , :index, @user.username), class: "flex flex-col items-center justify-center " do %>
-          <img src="/images/line.png" class="h-[28px] w-[28px] object-contain" />
+          <%= link to: Routes.page_index_path(@conn , :index, @user.username), class: "flex flex-col items-center justify-center " do %>
+            <img src="/images/line.png" class="h-[28px] w-[28px] object-contain" />
 
-          <p class="text-white">
-            Queue
-          </p>
-        <% end %>
-      </div>
+            <p class="text-white">
+              Queue
+            </p>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </body>
 </html>

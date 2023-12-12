@@ -23,21 +23,18 @@
   </.form>
   <div class="flex flex-col gap-2 ">
     <%= for song <- @songs do %>
-      <%= live_redirect to: Routes.page_song_requests_path(@socket , :index , @user.username , song["data"]["id"]  ) do %>
+      <%= live_redirect to: Routes.page_song_requests_path(@socket , :index , @user.username , song["id"]  ) do %>
         <div class="flex flex-col gap-1 p-2 hover:bg-[#444344]/60 transition-all ease-in-out duration-500 cursor-pointer">
           <div class="flex gap-2 items-start">
-            <img
-              src={hd(song["data"]["albumOfTrack"]["coverArt"]["sources"])["url"]}
-              class="w-[60px] h-[60px]  object-cover"
-            />
+            <img src={hd(song["album"]["images"])["url"]} class="w-[60px] h-[60px]  object-cover" />
 
             <div class="flex flex-col text-white gap-2">
               <p>
-                <%= song["data"]["name"] %>
+                <%= song["name"] %>
               </p>
               <div class="flex gap-1 items-center">
-                <%= song["data"]["artists"]["items"]
-                |> Enum.map(fn artist -> artist["profile"]["name"] end)
+                <%= song["artists"]
+                |> Enum.map(fn artist -> artist["name"] end)
                 |> Enum.join(", ") %>
               </div>
             </div>

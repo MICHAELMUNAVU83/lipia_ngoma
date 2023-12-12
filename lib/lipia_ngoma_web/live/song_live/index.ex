@@ -23,7 +23,7 @@ defmodule LipiaNgomaWeb.SongLive.Index do
         Spotify.initiate_search(params["q"])
         |> Enum.take(5)
       else
-        Spotify.initiate_search("hip hop")
+        Spotify.initiate_search("hiphop")
         |> Enum.take(5)
       end
 
