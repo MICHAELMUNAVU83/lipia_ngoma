@@ -1,27 +1,59 @@
-<h1>Log in</h1>
-
-<.form let={f} for={@conn} action={Routes.user_session_path(@conn, :create)} as={:user}>
-  <%= if @error_message do %>
-    <div class="alert alert-danger">
-      <p><%= @error_message %></p>
-    </div>
-  <% end %>
-
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
-
-  <%= label f, :password %>
-  <%= password_input f, :password, required: true %>
-
-  <%= label f, :remember_me, "Keep me logged in for 60 days" %>
-  <%= checkbox f, :remember_me %>
-
-  <div>
-    <%= submit "Log in" %>
+<div class="h-[100vh] w-[100%] bg-gradient-to-tr from-[#CF3030] to-[#430E81] flex justify-start gap-4 p-4 items-center flex-col  ">
+  <div class="flex flex-col mx-auto w-[90%]">
+    <p class="text-xl text-white">
+      Login to your account
+    </p>
+    <p class="bg-white h-[2px] w-[100%]" />
   </div>
-</.form>
+  <.form
+    class="w-[90%] mx-auto"
+    let={f}
+    for={@conn}
+    action={Routes.user_session_path(@conn, :create)}
+    as={:user}
+  >
+    <%= if @error_message do %>
+      <div class="alert alert-danger">
+        <p><%= @error_message %></p>
+      </div>
+    <% end %>
+    <div class="flex flex-col w-[100%] gap-2 ">
+      <div class="flex flex-col w-[100%] gap-2">
+        <%= label(f, :email, class: "text-white text-xl") %>
+        <%= email_input(f, :email, required: true) %>
+      </div>
 
-<p>
-  <%= link "Register", to: Routes.user_registration_path(@conn, :new) %> |
-  <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
-</p>
+      <div class="flex flex-col w-[100%] gap-2">
+        <%= label(f, :password, class: "text-white text-xl") %>
+        <%= password_input(f, :password, required: true) %>
+      </div>
+      <div class="flex gap-2 items-center">
+        <%= label(f, :remember_me, "Keep me logged in for 60 days", class: "text-white") %>
+        <%= checkbox(f, :remember_me) %>
+      </div>
+
+      <div class="flex justify-center  text-white text-xl items-center">
+        <%= submit("Login",
+          phx_disable_with: "Registering...",
+          class:
+            "border-2 border-[#FFFFFF] rounded-3xl p-2 hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer"
+        ) %>
+      </div>
+
+      <div class="flex justify-center items-center">
+        <p class="text-white uppercase underline text-xl">
+          <%= live_redirect to: Routes.home_index_path(@conn , :index) do %>
+            back
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </.form>
+
+  <p class="text-white text-[20px]">
+    <%= link("Register", to: Routes.user_registration_path(@conn, :new)) %> | <%= link(
+      "Forgot your password?",
+      to: Routes.user_reset_password_path(@conn, :new)
+    ) %>
+  </p>
+</div>

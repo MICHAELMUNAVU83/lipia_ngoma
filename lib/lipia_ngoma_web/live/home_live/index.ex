@@ -19,6 +19,7 @@ defmodule LipiaNgomaWeb.HomeLive.Index do
 
     {:ok,
      socket
+     |> assign(:user_signed_in, user_signed_in)
      |> assign(:user, user)}
   end
 end

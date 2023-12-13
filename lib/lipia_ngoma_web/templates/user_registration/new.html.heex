@@ -1,32 +1,79 @@
-<h1>Register</h1>
-
-<.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)}>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= label(f, :email) %>
-  <%= email_input(f, :email, required: true) %>
-  <%= error_tag(f, :email) %>
-
-  <%= label(f, :username) %>
-  <%= text_input(f, :username, required: true) %>
-  <%= error_tag(f, :username) %>
-
-  <%= label(f, :password) %>
-  <%= password_input(f, :password, required: true) %>
-  <%= error_tag(f, :password) %>
-
-  <div>
-    <%= submit("Register") %>
+<div class="h-[100vh] w-[100%] bg-gradient-to-tr from-[#CF3030] to-[#430E81] flex justify-start gap-4 p-4 items-center flex-col  ">
+  <div class="flex flex-col mx-auto w-[90%]">
+    <p class="text-xl text-white">
+      Create An Account
+    </p>
+    <p class="bg-white h-[2px] w-[100%]" />
   </div>
-</.form>
+  <.form
+    let={f}
+    class="w-[90%] mx-auto"
+    for={@changeset}
+    action={Routes.user_registration_path(@conn, :create)}
+  >
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+    <div class="flex flex-col w-[100%] gap-2 ">
+      <div class="flex flex-col w-[100%] gap-2">
+        <%= label(f, :email, class: "text-white text-xl") %>
+        <%= email_input(f, :email,
+          required: true,
+          class:
+            "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+        ) %>
+        <p class="py-3">
+          <%= error_tag(f, :email) %>
+        </p>
+      </div>
+      <div class="flex flex-col gap-2">
+        <%= label(f, :username, class: "text-white text-xl") %>
+        <%= text_input(f, :username,
+          required: true,
+          class:
+            "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+        ) %>
+        <p class="py-3">
+          <%= error_tag(f, :username) %>
+        </p>
+      </div>
 
-<p>
-  <%= link("Log in", to: Routes.user_session_path(@conn, :new)) %> | <%= link(
-    "Forgot your password?",
-    to: Routes.user_reset_password_path(@conn, :new)
-  ) %>
-</p>
+      <div class="flex flex-col gap-2">
+        <%= label(f, :password, class: "text-white text-xl") %>
+        <%= password_input(f, :password,
+          required: true,
+          class:
+            "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+        ) %>
+        <p class="py-3">
+          <%= error_tag(f, :password) %>
+        </p>
+      </div>
+
+      <div class="flex justify-center  text-white text-xl items-center">
+        <%= submit("Register",
+          phx_disable_with: "Registering...",
+          class:
+            "border-2 border-[#FFFFFF] rounded-3xl p-2 hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer"
+        ) %>
+      </div>
+
+      <div class="flex justify-center items-center">
+        <p class="text-white uppercase underline text-xl">
+          <%= live_redirect to: Routes.home_index_path(@conn , :index) do %>
+            back
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </.form>
+
+  <p class="text-white text-[20px]">
+    <%= link("Log in", to: Routes.user_session_path(@conn, :new)) %> | <%= link(
+      "Forgot your password?",
+      to: Routes.user_reset_password_path(@conn, :new)
+    ) %>
+  </p>
+</div>

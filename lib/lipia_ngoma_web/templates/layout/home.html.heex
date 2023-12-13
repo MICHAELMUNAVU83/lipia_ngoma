@@ -22,6 +22,19 @@
   <% end %>
 
   <div class="h-[100vh] w-[100%] bg-gradient-to-tr from-[#CF3030] to-[#430E81] flex justify-center items-center flex-col  ">
+    <ul>
+      <%= if @user_signed_in  == true do %>
+        <li><%= @user.email %></li>
+        <li><%= link("Settings", to: Routes.user_settings_path(@socket, :edit)) %></li>
+        <li>
+          <%= link("Log out", to: Routes.user_session_path(@socket, :delete), method: :delete) %>
+        </li>
+      <% else %>
+        <li><%= link("Register", to: Routes.user_registration_path(@socket, :new)) %></li>
+        <li><%= link("Log in", to: Routes.user_session_path(@socket, :new)) %></li>
+      <% end %>
+    </ul>
+
     <%= @inner_content %>
   </div>
 </main>
