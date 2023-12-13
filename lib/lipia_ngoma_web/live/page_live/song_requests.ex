@@ -34,26 +34,39 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
       |> List.first()
       |> Map.get("url")
 
-    IO.inspect(track["id"])
-
     socket
     |> assign(:user, user)
     |> assign(:song_request, %SongRequest{})
     |> assign(:name_of_track, name_of_track)
     |> assign(:artists, artists)
     |> assign(:songrequestid, track["id"])
+    |> assign(:position, "")
     |> assign(:image, image)
     |> assign(:changeset, SongRequests.change_song_request(%SongRequest{}))
     |> assign(:page_title, "Add Song Requests for #{username} Home Page")
   end
 
   def handle_event("validate", %{"song_request" => song_request_params}, socket) do
+    position =
+      if song_request_params["price"] != "" do
+        SongRequests.get_eventual_song_position(
+          String.to_integer(song_request_params["price"]),
+          socket.assigns.user.id
+        )
+      else
+        ""
+      end
+
     changeset =
       socket.assigns.song_request
       |> SongRequests.change_song_request(song_request_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign(socket, :changeset, changeset)}
+    {:noreply,
+     socket
+     |> assign(:changeset, changeset)
+     |> assign(:price, song_request_params["price"])
+     |> assign(:position, position)}
   end
 
   def handle_event("save", %{"song_request" => song_request_params}, socket) do
@@ -72,14 +85,14 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
            "test@gmail.com",
            String.to_integer(song_request_params["price"]),
            "Nairobi",
-           "https://1ccf-102-135-174-116.ngrok-free.app/api/transactions",
+           "https://a907-105-163-0-112.ngrok-free.app/api/transactions",
            transaction_reference
          ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         customer_record =
           Chpter.check_for_payment(
             transaction_reference,
-            "https://1ccf-102-135-174-116.ngrok-free.app/api/transactions"
+            "https://a907-105-163-0-112.ngrok-free.app/api/transactions"
           )
 
         new_song_request_params =
@@ -117,7 +130,7 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
         customer_record =
           Chpter.check_for_payment(
             transaction_reference,
-            "https://16ae-105-163-157-168.ngrok-free.app/api/transactions"
+            "https://a907-105-163-0-112.ngrok-free.app/api/transactions"
           )
 
         new_song_request_params =

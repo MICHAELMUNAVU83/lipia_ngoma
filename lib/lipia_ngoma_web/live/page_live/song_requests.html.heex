@@ -59,6 +59,12 @@
       </p>
     </div>
 
+    <%= if @position != "" do %>
+      <p class="text-white">
+        If you pay KES <%= @price %> /=, the song will be at position <%= @position %>
+      </p>
+    <% end %>
+
     <div class="flex justify-center  text-white text-xl items-center">
       <%= submit("Send Money",
         phx_disable_with: "Sending Money...",

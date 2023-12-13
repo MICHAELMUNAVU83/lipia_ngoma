@@ -27,7 +27,7 @@ defmodule LipiaNgoma.SongRequests do
     |> Enum.filter(fn song_request -> song_request.is_refunded == false end)
   end
 
-  def get_song_position(amount, id) do
+  def get_eventual_song_position(amount, id) do
     array =
       list_song_requests_for_a_user(id)
       |> Enum.map(fn song_request -> song_request.price end)
@@ -37,6 +37,15 @@ defmodule LipiaNgoma.SongRequests do
       |> Enum.sort(:desc)
 
     zero_index = Enum.find_index(new_array, fn x -> x == amount end)
+    index = zero_index + 1
+  end
+
+  def get_song_position(song_id, user_id) do
+    array =
+      list_song_requests_for_a_user(user_id)
+
+    zero_index = Enum.find_index(array, fn x -> x.id == song_id end)
+
     index = zero_index + 1
   end
 

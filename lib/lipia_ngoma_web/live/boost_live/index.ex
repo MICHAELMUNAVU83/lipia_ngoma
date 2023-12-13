@@ -26,21 +26,52 @@ defmodule LipiaNgomaWeb.BoostLive.Index do
     user = Users.get_user_by_username(username)
     song_request = SongRequests.get_song_request!(song_request_id)
 
+    position = SongRequests.get_song_position(song_request.id, user.id)
+
     socket
     |> assign(:user, user)
     |> assign(:song_request, song_request)
+    |> assign(:position, position)
     |> assign(:boost, %Boost{})
+    |> assign(:eventual_position, "")
     |> assign(:changeset, Boosts.change_boost(%Boost{}))
     |> assign(:page_title, "Add A boost for #{song_request.name} ")
   end
 
   def handle_event("validate", %{"boost" => boost_params}, socket) do
+    IO.inspect(boost_params["price"])
+
+    eventual_position =
+      if boost_params["price"] != "" do
+        SongRequests.get_eventual_song_position(
+          String.to_integer(boost_params["price"]) + socket.assigns.song_request.price,
+          socket.assigns.user.id
+        )
+      else
+        ""
+      end
+
+    total_price =
+      if boost_params["price"] != "" do
+        String.to_integer(boost_params["price"]) + socket.assigns.song_request.price
+      else
+        ""
+      end
+
     changeset =
       socket.assigns.boost
       |> Boosts.change_boost(boost_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign(socket, :changeset, changeset)}
+    {:noreply,
+     socket
+     |> assign(:changeset, changeset)
+     |> assign(:price, boost_params["price"])
+     |> assign(
+       :total_price,
+       total_price
+     )
+     |> assign(:eventual_position, eventual_position)}
   end
 
   def handle_event("save", %{"boost" => boost_params}, socket) do
@@ -57,14 +88,14 @@ defmodule LipiaNgomaWeb.BoostLive.Index do
            "test@gmail.com",
            String.to_integer(boost_params["price"]),
            "Nairobi",
-           "https://1ccf-102-135-174-116.ngrok-free.app/api/transactions",
+           "https://a907-105-163-0-112.ngrok-free.app/api/transactions",
            transaction_reference
          ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         customer_record =
           Chpter.check_for_payment(
             transaction_reference,
-            "https://1ccf-102-135-174-116.ngrok-free.app/api/transactions"
+            "https://a907-105-163-0-112.ngrok-free.app/api/transactions"
           )
 
         new_boost_params =
@@ -75,6 +106,12 @@ defmodule LipiaNgomaWeb.BoostLive.Index do
         if customer_record["success"] == true do
           case Boosts.create_boost(new_boost_params) do
             {:ok, boost} ->
+              {:ok, _song_request} =
+                SongRequests.update_song_request(socket.assigns.song_request, %{
+                  price:
+                    socket.assigns.song_request.price + String.to_integer(boost_params["price"])
+                })
+
               {:noreply,
                socket
                |> push_redirect(
@@ -100,7 +137,7 @@ defmodule LipiaNgomaWeb.BoostLive.Index do
         customer_record =
           Chpter.check_for_payment(
             transaction_reference,
-            "https://16ae-105-163-157-168.ngrok-free.app/api/transactions"
+            "https://a907-105-163-0-112.ngrok-free.app/api/transactions"
           )
 
         new_boost_params =
@@ -111,6 +148,12 @@ defmodule LipiaNgomaWeb.BoostLive.Index do
         if customer_record["success"] == true do
           case Boosts.create_boost(new_boost_params) do
             {:ok, boost} ->
+              {:ok, _song_request} =
+                SongRequests.update_song_request(socket.assigns.song_request, %{
+                  price:
+                    socket.assigns.song_request.price + String.to_integer(boost_params["price"])
+                })
+
               {:noreply,
                socket
                |> push_redirect(
