@@ -2,6 +2,15 @@
   <p class="text-white">
     <%= @user.username %>
   </p>
+
+  <%= live_redirect(to: Routes.mix_index_path(@socket, :index, @user.username),class: "w-[80%] flex flex-col  mx-auto h-[200px]") do %>
+    <div class=" bg-gradient-to-tr from-[#C63676] to-[#8816AC] w-[100%] h-[150px] flex flex-col justify-center items-center rounded-t-3xl">
+      <img src="/images/addsong.png" class="w-[100px] h-[100px] object-cover" />
+    </div>
+    <div class="bg-black h-[50px] rounded-b-3xl flex flex-col justify-center items-center text-white text-2xl  w-[100%]">
+      Add A   Mix
+    </div>
+  <% end %>
   <%= live_redirect(to: Routes.song_index_path(@socket, :index, @user.username),class: "w-[80%] flex flex-col  mx-auto h-[200px]") do %>
     <div class=" bg-gradient-to-tr from-[#C63676] to-[#8816AC] w-[100%] h-[150px] flex flex-col justify-center items-center rounded-t-3xl">
       <img src="/images/addsong.png" class="w-[100px] h-[100px] object-cover" />

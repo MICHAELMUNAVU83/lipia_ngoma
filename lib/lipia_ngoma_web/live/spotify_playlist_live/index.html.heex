@@ -1,0 +1,45 @@
+<h1>Listing Spotify playlists</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.spotify_playlist_index_path(@socket, :index)}>
+    <.live_component
+      module={LipiaNgomaWeb.SpotifyPlaylistLive.FormComponent}
+      id={@spotify_playlist.id || :new}
+      title={@page_title}
+      action={@live_action}
+      spotify_playlist={@spotify_playlist}
+      return_to={Routes.spotify_playlist_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Phone number</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="spotify_playlists">
+    <%= for spotify_playlist <- @spotify_playlists do %>
+      <tr id={"spotify_playlist-#{spotify_playlist.id}"}>
+        <td><%= spotify_playlist.phone_number %></td>
+        <td><%= spotify_playlist.price %></td>
+        <td><%= spotify_playlist.status %></td>
+        <td><%= spotify_playlist.name %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.spotify_playlist_show_path(@socket, :show, spotify_playlist) %></span>
+          <span><%= live_patch "Edit", to: Routes.spotify_playlist_index_path(@socket, :edit, spotify_playlist) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: spotify_playlist.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Spotify playlist", to: Routes.spotify_playlist_index_path(@socket, :new) %></span>

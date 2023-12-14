@@ -116,4 +116,27 @@ defmodule LipiaNgomaWeb.Router do
     live "/:username/boostsuccess/:boost_id", BoostLive.Success, :index
     live "/:username/song_requests", SongRequestLive.Index, :index
   end
+
+  scope "/", LipiaNgomaWeb do
+    pipe_through :browser
+
+    live "/", HomeLive.Index, :index
+    live "/:username", PageLive.Index, :index
+    live "/:username/tips", PageLive.Tips, :index
+    live "/:username/songs", SongLive.Index, :index
+    live "/:username/:track_id/song_requests", PageLive.SongRequests, :index
+
+    live "/:username/tips/success", PageLive.TipSuccess, :index
+    live "/:username/song_requests/success/:song_request_id", PageLive.SongRequestsSuccess, :index
+
+    live "/:username/boosts/:song_request_id", BoostLive.Index, :index
+    live "/:username/boostsuccess/:boost_id", BoostLive.Success, :index
+  end
+
+  scope "/", LipiaNgomaWeb do
+    pipe_through [:browser, :require_authenticated_user]
+    live "/:username/mix", MixLive.Index, :index
+    live "/:username/add_spotify_playlist", ClientSpotifyPlaylistLive.AddPlaylist, :index
+    live "/:username/spotify_playlist/success", ClientSpotifyPlaylistLive.Success, :index
+  end
 end

@@ -1,0 +1,41 @@
+<h1>Show Spotify playlist</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.spotify_playlist_show_path(@socket, :show, @spotify_playlist)}>
+    <.live_component
+      module={LipiaNgomaWeb.SpotifyPlaylistLive.FormComponent}
+      id={@spotify_playlist.id}
+      title={@page_title}
+      action={@live_action}
+      spotify_playlist={@spotify_playlist}
+      return_to={Routes.spotify_playlist_show_path(@socket, :show, @spotify_playlist)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Phone number:</strong>
+    <%= @spotify_playlist.phone_number %>
+  </li>
+
+  <li>
+    <strong>Price:</strong>
+    <%= @spotify_playlist.price %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @spotify_playlist.status %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @spotify_playlist.name %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.spotify_playlist_show_path(@socket, :edit, @spotify_playlist), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.spotify_playlist_index_path(@socket, :index) %></span>

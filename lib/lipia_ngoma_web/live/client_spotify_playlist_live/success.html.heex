@@ -1,0 +1,20 @@
+<div class="flex flex-col h-[80vh] justify-center items-center gap-4">
+  <img src="/images/requestsuccess.png" class="w-[150px] h-[200px] object-cover" />
+  <div class="flex flex-col text-white text-center gap-2">
+    <p class="font-semibold text-2xl">
+      Success !
+    </p>
+    <p class="text-xl w-[90%] mx-auto">
+      Your song will be played after the DJ accepts your request
+    </p>
+    <p class="text-xl font-semibold"></p>
+  </div>
+
+  <div class="flex justify-center items-center">
+    <p class="text-white uppercase underline text-xl">
+      <%= live_redirect to: Routes.page_index_path(@socket , :index, @user.username) do %>
+        back
+      <% end %>
+    </p>
+  </div>
+</div>
