@@ -25,6 +25,21 @@ defmodule LipiaNgoma.Tips do
     Repo.all(from t in Tip, where: t.user_id == ^id)
   end
 
+  def search_tips(query, id) do
+    if query == "" || query == nil do
+      list_tips_for_a_user(id)
+    else
+      list_tips_for_a_user(id)
+      |> Enum.filter(fn tip ->
+        String.contains?(String.downcase(tip.name), String.downcase(query)) or
+          String.contains?(
+            String.downcase(tip.phone_number),
+            String.downcase(query)
+          )
+      end)
+    end
+  end
+
   @doc """
   Gets a single tip.
 

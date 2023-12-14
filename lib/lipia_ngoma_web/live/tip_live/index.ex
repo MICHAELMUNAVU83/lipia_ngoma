@@ -7,12 +7,12 @@ defmodule LipiaNgomaWeb.TipLive.Index do
 
   @impl true
   def mount(_params, session, socket) do
-    current_user = Users.get_user_by_session_token(session["user_token"])
+    user = Users.get_user_by_session_token(session["user_token"])
 
     {:ok,
      socket
-     |> assign(:current_user, current_user)
-     |> assign(:tips, list_tips(current_user.id))}
+     |> assign(:user, user)
+     |> assign(:changeset, Tips.change_tip(%Tip{}))}
   end
 
   @impl true
@@ -20,25 +20,29 @@ defmodule LipiaNgomaWeb.TipLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit Tip")
-    |> assign(:tip, Tips.get_tip!(id))
-  end
+  defp apply_action(socket, :index, params) do
+    tips =
+      if params["q"] do
+        Tips.search_tips(params["q"], socket.assigns.user.id)
+      else
+        list_tips(socket.assigns.user.id)
+      end
 
-  defp apply_action(socket, :index, _params) do
+    IO.inspect(tips)
+
     socket
     |> assign(:page_title, "Listing Tips")
+    |> assign(:tips, tips)
     |> assign(:tip, nil)
   end
 
-  @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    tip = Tips.get_tip!(id)
-    {:ok, _} = Tips.delete_tip(tip)
-
-    {:noreply, assign(socket, :tips, list_tips(socket.assigns.current_user.id))}
+  def handle_event("search_tip", params, socket) do
+    {:noreply,
+     socket
+     |> push_patch(to: "/tips/?q=#{params["tip"]["search"]}")}
   end
+
+  @impl true
 
   defp list_tips(id) do
     Tips.list_tips_for_a_user(id)
