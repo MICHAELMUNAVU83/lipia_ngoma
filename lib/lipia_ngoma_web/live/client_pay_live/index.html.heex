@@ -1,89 +1,97 @@
-<div class=" flex flex-col gap-2  overflow-y-scroll w-[90%] mx-auto">
-  <div class="flex flex-col gap-2">
-    <p class="uppercase md:text-2xl text-white font-semibold">
-      Pay for a mixtape
-    </p>
+<%= if @mixtape.status == "pending" do %>
+  <div class=" flex flex-col gap-2  overflow-y-scroll w-[90%] mx-auto">
+    <div class="flex flex-col gap-2">
+      <p class="uppercase md:text-2xl text-white font-semibold">
+        Pay for a mixtape
+      </p>
 
-    <div class="uppercase md:text-2xl flex gap-1 items-center text-white font-semibold">
-      <%= length(@songs) %> Songs
+      <div class="uppercase md:text-2xl flex gap-1 items-center text-white font-semibold">
+        <%= length(@songs) %> Songs
+      </div>
+
+      <p class="h-[2px] w-[100%] bg-white" />
     </div>
 
-    <p class="h-[2px] w-[100%] bg-white" />
-  </div>
+    <.form
+      let={f}
+      for={@changeset}
+      id="client-pay-form"
+      class="h-[90%] w-[100%]  flex flex-col"
+      phx-change="validate"
+      phx-submit="save"
+    >
+      <p class="text-white">
+        Fill in this form to pay with Mpesa
+      </p>
 
-  <.form
-    let={f}
-    for={@changeset}
-    id="client-pay-form"
-    class="h-[90%] w-[100%]  flex flex-col"
-    phx-change="validate"
-    phx-submit="save"
-  >
+      <div class="flex flex-col gap-2">
+        <%= label(f, :full_name, class: "text-white text-xl") %>
+        <%= text_input(f, :name,
+          class:
+            "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+          placeholder: "Enter your full name"
+        ) %>
+        <p class="py-2">
+          <%= error_tag(f, :name) %>
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <%= label(f, :phone_number, class: "text-white text-xl") %>
+        <%= text_input(f, :phone_number,
+          class:
+            "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+          placeholder: "Enter your phone number"
+        ) %>
+        <p class="py-2">
+          <%= error_tag(f, :phone_number) %>
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <%= label(f, :price, class: "text-white text-xl") %>
+        <%= number_input(f, :price,
+          class:
+            "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+          placeholder: "Enter the amount you want to pay "
+        ) %>
+        <p class="py-2">
+          <%= error_tag(f, :price) %>
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <%= label(f, :mixtape_name, class: "text-white text-xl") %>
+        <%= text_input(f, :mixtape_name,
+          class:
+            "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+          placeholder: "Name you want to give your mixtape.."
+        ) %>
+        <p class="py-2">
+          <%= error_tag(f, :mixtape_name) %>
+        </p>
+      </div>
+
+      <div class="flex justify-center  text-white text-xl items-center">
+        <%= submit("Pay",
+          phx_disable_with: "Paying...",
+          class:
+            "border-2 border-[#FFFFFF] rounded-3xl p-2 hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer"
+        ) %>
+      </div>
+    </.form>
+    <div class="flex justify-center items-center">
+      <p class="text-white uppercase underline text-xl">
+        <%= live_redirect to: Routes.song_index_path(@socket , :index, @user.username) do %>
+          back
+        <% end %>
+      </p>
+    </div>
+  </div>
+<% else %>
+  <div class="flex flex-col h-[100%] justify-center items-center">
     <p class="text-white">
-      Fill in this form to pay with Mpesa
-    </p>
-
-    <div class="flex flex-col gap-2">
-      <%= label(f, :full_name, class: "text-white text-xl") %>
-      <%= text_input(f, :name,
-        class:
-          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
-        placeholder: "Enter your full name"
-      ) %>
-      <p class="py-2">
-        <%= error_tag(f, :name) %>
-      </p>
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <%= label(f, :phone_number, class: "text-white text-xl") %>
-      <%= text_input(f, :phone_number,
-        class:
-          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
-        placeholder: "Enter your phone number"
-      ) %>
-      <p class="py-2">
-        <%= error_tag(f, :phone_number) %>
-      </p>
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <%= label(f, :price, class: "text-white text-xl") %>
-      <%= number_input(f, :price,
-        class:
-          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
-        placeholder: "Enter the amount you want to pay "
-      ) %>
-      <p class="py-2">
-        <%= error_tag(f, :price) %>
-      </p>
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <%= label(f, :mixtape_name, class: "text-white text-xl") %>
-      <%= text_input(f, :mixtape_name,
-        class:
-          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
-        placeholder: "Name you want to give your mixtape.."
-      ) %>
-      <p class="py-2">
-        <%= error_tag(f, :mixtape_name) %>
-      </p>
-    </div>
-
-    <div class="flex justify-center  text-white text-xl items-center">
-      <%= submit("Pay",
-        phx_disable_with: "Paying...",
-        class:
-          "border-2 border-[#FFFFFF] rounded-3xl p-2 hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer"
-      ) %>
-    </div>
-  </.form>
-  <div class="flex justify-center items-center">
-    <p class="text-white uppercase underline text-xl">
-      <%= live_redirect to: Routes.song_index_path(@socket , :index, @user.username) do %>
-        back
-      <% end %>
+      You have already paid for this mixtape
     </p>
   </div>
-</div>
+<% end %>
