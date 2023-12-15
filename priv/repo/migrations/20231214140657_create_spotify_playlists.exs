@@ -6,6 +6,7 @@ defmodule LipiaNgoma.Repo.Migrations.CreateSpotifyPlaylists do
       add :phone_number, :string
       add :price, :integer
       add :status, :string, default: "pending"
+      add :mixtape_name, :string
       add :name, :string
       add :dj_id, references(:users, on_delete: :nothing)
       add :client_id, references(:users, on_delete: :nothing)

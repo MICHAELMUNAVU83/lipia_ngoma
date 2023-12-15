@@ -37,21 +37,84 @@ defmodule LipiaNgomaWeb.ClientSpotifyPlaylistLive.AddPlaylist do
   end
 
   def handle_event("save", %{"spotify_playlist" => spotify_playlist_params}, socket) do
-    case IO.inspect(SpotifyPlaylists.create_spotify_playlist(spotify_playlist_params)) do
-      {:ok, _spotify_playlist} ->
+    transaction_reference =
+      TransactionAlgorithim.code_reference_for_transaction(
+        Integer.to_string(socket.assigns.user.id),
+        spotify_playlist_params["phone_number"]
+      )
+
+    case Chpter.initiate_payment(
+           "pk_4aff02227456f6b499820c2621ae181c9e35666d25865575fef47622265dcbb9",
+           spotify_playlist_params["phone_number"],
+           spotify_playlist_params["name"],
+           "test@gmail.com",
+           String.to_integer(spotify_playlist_params["price"]),
+           "Nairobi",
+           transaction_reference
+         ) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        customer_record =
+          Chpter.check_for_payment(transaction_reference)
+
+        if customer_record["success"] == true do
+          case SpotifyPlaylists.create_spotify_playlist(spotify_playlist_params) do
+            {:ok, _spotify_playlist} ->
+              {:noreply,
+               socket
+               |> push_redirect(
+                 to:
+                   Routes.client_spotify_playlist_success_path(
+                     LipiaNgomaWeb.Endpoint,
+                     :index,
+                     socket.assigns.user.username
+                   )
+               )}
+
+            {:error, %Ecto.Changeset{} = changeset} ->
+              {:noreply, assign(socket, changeset: changeset)}
+          end
+        else
+          {:noreply,
+           socket
+           |> put_flash(:error, "Payment Failed , #{customer_record["message"]}")}
+        end
+
+      {:error, %HTTPoison.Error{reason: :timeout, id: nil}} ->
+        customer_record =
+          Chpter.check_for_payment(transaction_reference)
+
+        if customer_record["success"] == true do
+          case SpotifyPlaylists.create_spotify_playlist(spotify_playlist_params) do
+            {:ok, _spotify_playlist} ->
+              {:noreply,
+               socket
+               |> push_redirect(
+                 to:
+                   Routes.client_spotify_playlist_success_path(
+                     LipiaNgomaWeb.Endpoint,
+                     :index,
+                     socket.assigns.user.username
+                   )
+               )}
+
+            {:error, %Ecto.Changeset{} = changeset} ->
+              {:noreply, assign(socket, changeset: changeset)}
+          end
+        else
+          {:noreply,
+           socket
+           |> put_flash(:error, "Payment Failed , #{customer_record["message"]}")}
+        end
+
+      {:ok, %HTTPoison.Response{status_code: 400, body: body}} ->
         {:noreply,
          socket
-         |> push_redirect(
-           to:
-             Routes.client_spotify_playlist_success_path(
-               LipiaNgomaWeb.Endpoint,
-               :index,
-               socket.assigns.user.username
-             )
-         )}
+         |> put_flash(:error, "Payment Failed")}
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Payment Failed , Timeout error")}
     end
   end
 end

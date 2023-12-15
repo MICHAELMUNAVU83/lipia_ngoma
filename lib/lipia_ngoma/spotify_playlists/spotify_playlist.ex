@@ -7,6 +7,7 @@ defmodule LipiaNgoma.SpotifyPlaylists.SpotifyPlaylist do
     field :status, :string, default: "pending"
     field :phone_number, :string
     field :spotify_playlist_link, :string
+    field :mixtape_name, :string
     field :price, :integer
     belongs_to :dj, LipiaNgoma.Users.User
     belongs_to :client, LipiaNgoma.Users.User
@@ -24,6 +25,7 @@ defmodule LipiaNgoma.SpotifyPlaylists.SpotifyPlaylist do
       :name,
       :dj_id,
       :client_id,
+      :mixtape_name,
       :spotify_playlist_link
     ])
     |> validate_required([
@@ -33,6 +35,7 @@ defmodule LipiaNgoma.SpotifyPlaylists.SpotifyPlaylist do
       :name,
       :dj_id,
       :client_id,
+      :mixtape_name,
       :spotify_playlist_link
     ])
   end
