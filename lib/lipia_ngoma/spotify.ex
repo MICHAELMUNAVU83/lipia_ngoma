@@ -65,7 +65,7 @@ defmodule LipiaNgoma.Spotify do
     [
       {
         "Authorization",
-        "Bearer BQD-Gi9l_YuJM_MFtG2xEGlCc4GY0ypjNX3VFA-yUXk3wKAHAETMuePzgutR2igvJcBJOnK1tF_Zyf0pUGWO1T-Zt2XC1ki_rqdUB4hYoWs1RWgJQWo"
+        "Bearer BQDdrG6Lu86oAM1jggjC9pSdGaW6vOUADFheRb2lIcqCOBSPBNoYGAThUXOPS7mUkgDY7858v03AG-eW1iS7FtrT9OyxE97bSBE32GY-nBVgSeigttw"
       }
     ]
   end

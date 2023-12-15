@@ -6,6 +6,7 @@ defmodule LipiaNgoma.Mixtapes.Mixtape do
     field :status, :string
     belongs_to :dj, LipiaNgoma.Users.User
     belongs_to :client, LipiaNgoma.Users.User
+    has_many :mixtape_songs, LipiaNgoma.MixtapeSongs.MixtapeSong
 
     timestamps()
   end

@@ -1,0 +1,36 @@
+<h1>Show Mixtape song</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.mixtape_song_show_path(@socket, :show, @mixtape_song)}>
+    <.live_component
+      module={LipiaNgomaWeb.MixtapeSongLive.FormComponent}
+      id={@mixtape_song.id}
+      title={@page_title}
+      action={@live_action}
+      mixtape_song={@mixtape_song}
+      return_to={Routes.mixtape_song_show_path(@socket, :show, @mixtape_song)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Song name:</strong>
+    <%= @mixtape_song.song_name %>
+  </li>
+
+  <li>
+    <strong>Image:</strong>
+    <%= @mixtape_song.image %>
+  </li>
+
+  <li>
+    <strong>Artists:</strong>
+    <%= @mixtape_song.artists %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.mixtape_song_show_path(@socket, :edit, @mixtape_song), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.mixtape_song_index_path(@socket, :index) %></span>
