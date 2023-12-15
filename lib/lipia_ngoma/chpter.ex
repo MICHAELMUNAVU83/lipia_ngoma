@@ -181,7 +181,7 @@ defmodule LipiaNgoma.Chpter do
   end
 
   def get_api_endpoint do
-    "https://712e-102-135-174-116.ngrok-free.app/api/transactions"
+    "https://c7fb-102-135-174-116.ngrok-free.app/api/transactions"
   end
 
   @doc """

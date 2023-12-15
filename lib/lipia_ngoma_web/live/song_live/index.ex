@@ -26,7 +26,6 @@ defmodule LipiaNgomaWeb.SongLive.Index do
       end
 
     user = Users.get_user_by_username(params["username"])
-    IO.inspect(user)
 
     {:noreply,
      socket
@@ -40,5 +39,33 @@ defmodule LipiaNgomaWeb.SongLive.Index do
     {:noreply,
      socket
      |> push_patch(to: "/#{socket.assigns.username}/songs/?q=#{params["song_request"]["search"]}")}
+  end
+
+  def handle_event("select_song", params, socket) do
+    song_requests =
+      SongRequests.list_song_requests_for_a_user(socket.assigns.user.id)
+      |> Enum.map(fn song_request ->
+        song_request.songrequestid
+      end)
+
+    case Enum.member?(song_requests, params["id"]) do
+      true ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Song already requested")}
+
+      false ->
+        {:noreply,
+         socket
+         |> push_redirect(
+           to:
+             Routes.page_song_requests_path(
+               LipiaNgomaWeb.Endpoint,
+               :index,
+               socket.assigns.user.username,
+               params["id"]
+             )
+         )}
+    end
   end
 end
