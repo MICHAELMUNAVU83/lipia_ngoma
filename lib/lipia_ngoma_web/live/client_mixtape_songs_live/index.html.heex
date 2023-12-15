@@ -1,7 +1,7 @@
 <div class=" w-[90%] mx-auto">
   <div class="h-[5vh] mb-[150px] md:mb-[70px]">
     <p class="text-xl my-2 text-white">
-      Search for a song then click on the song to proceed
+      Add and Remove songs from your cart
     </p>
     <.form
       let={f}
@@ -24,10 +24,10 @@
       </div>
     </.form>
   </div>
-  <div class="flex h-[60vh] overflow-y-scroll flex-col gap-2 ">
+  <div class="flex md:h-[60vh] h-[50vh] overflow-y-scroll flex-col gap-2 ">
     <%= for song <- @songs do %>
       <div class="flex flex-col gap-1 p-2 hover:bg-[#444344]/60 transition-all ease-in-out duration-500 cursor-pointer">
-        <div class="flex justify-between w-[100%]">
+        <div class="flex md:flex-row flex-col gap-4 justify-between w-[100%]">
           <div class="flex gap-2 items-start">
             <img src={hd(song["album"]["images"])["url"]} class="w-[60px] h-[60px]  object-cover" />
 
@@ -74,7 +74,7 @@
     <% end %>
   </div>
 
-  <div class="w-[100%] h-[5vh] flex justify-center items-center">
+  <div class="w-[100%] h-[10vh] md:h-[5vh] flex justify-center items-center">
     <%= live_redirect to: Routes.client_cart_index_path(@socket, :index , @user.username, @mixtape.id), class: "bg-white px-4 h-[50px]  rounded-md hover:scale-105 transition-all duration-500 cursor-pointer" do %>
       <p class="text-xl my-2 text-black">
         Proceed to Cart

@@ -68,4 +68,8 @@ defmodule LipiaNgomaWeb.ClientCartLive.Index do
          "/#{socket.assigns.username}/#{socket.assigns.mixtape.id}/cart/?q=#{params["mixtape"]["search"]}"
      )}
   end
+
+
+
+  
 end
