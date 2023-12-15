@@ -21,6 +21,10 @@ defmodule LipiaNgoma.Mixtapes do
     Repo.all(Mixtape)
   end
 
+  def get_mixtapes_for_a_user(client_id) do
+    Repo.all(from(m in Mixtape, where: m.client_id == ^client_id))
+  end
+
   @doc """
   Gets a single mixtape.
 

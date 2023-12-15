@@ -136,6 +136,7 @@ defmodule LipiaNgomaWeb.Router do
   scope "/", LipiaNgomaWeb do
     pipe_through [:browser, :require_authenticated_user]
     live "/:username/mix", MixLive.Index, :index
+    live "/:username/mixtape_songs/:mixtape_id", ClientMixtapeSongsLive.Index, :index
     live "/:username/add_spotify_playlist", ClientSpotifyPlaylistLive.AddPlaylist, :index
     live "/:username/spotify_playlist/success", ClientSpotifyPlaylistLive.Success, :index
   end

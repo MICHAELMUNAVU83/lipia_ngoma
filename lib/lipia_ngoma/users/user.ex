@@ -14,6 +14,7 @@ defmodule LipiaNgoma.Users.User do
     has_many :tips, LipiaNgoma.Tips.Tip
     has_many :payouts, LipiaNgoma.Payouts.Payout
     has_many :transactions, LipiaNgoma.Transactions.Transaction
+
     timestamps()
   end
 
