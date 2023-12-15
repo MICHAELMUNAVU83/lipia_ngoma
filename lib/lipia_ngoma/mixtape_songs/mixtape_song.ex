@@ -6,6 +6,7 @@ defmodule LipiaNgoma.MixtapeSongs.MixtapeSong do
     field :image, :string
     field :song_name, :string
     field :artists, :string
+    field :songid, :string
     belongs_to :dj, LipiaNgoma.Users.User
     belongs_to :client, LipiaNgoma.Users.User
     belongs_to :mixtape, LipiaNgoma.Mixtapes.Mixtape
@@ -16,7 +17,7 @@ defmodule LipiaNgoma.MixtapeSongs.MixtapeSong do
   @doc false
   def changeset(mixtape_song, attrs) do
     mixtape_song
-    |> cast(attrs, [:song_name, :image, :artists, :dj_id, :client_id, :mixtape_id])
-    |> validate_required([:song_name, :image, :artists, :dj_id, :client_id, :mixtape_id])
+    |> cast(attrs, [:song_name, :image, :artists, :dj_id, :client_id, :mixtape_id, :songid])
+    |> validate_required([:song_name, :image, :artists, :dj_id, :client_id, :mixtape_id, :songid])
   end
 end

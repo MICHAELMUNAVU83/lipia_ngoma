@@ -39,7 +39,7 @@ defmodule LipiaNgoma.Mixtapes do
       ** (Ecto.NoResultsError)
 
   """
-  def get_mixtape!(id), do: Repo.get!(Mixtape, id)
+  def get_mixtape!(id), do: Repo.get!(Mixtape, id) |> Repo.preload(:mixtape_songs)
 
   @doc """
   Creates a mixtape.

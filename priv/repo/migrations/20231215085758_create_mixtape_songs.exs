@@ -4,6 +4,7 @@ defmodule LipiaNgoma.Repo.Migrations.CreateMixtapeSongs do
   def change do
     create table(:mixtape_songs) do
       add :song_name, :string
+      add :songid, :string
       add :image, :string
       add :artists, :string
       add :dj_id, references(:users, on_delete: :nothing)

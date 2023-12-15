@@ -40,15 +40,32 @@
               </div>
             </div>
           </div>
-          <div>
-            <button
-              phx_click="add_song"
-              phx_value-id={song["id"]}
-              class="bg-white px-4 h-[50px]  rounded-md hover:scale-105 transition-all duration-500 cursor-pointer"
-            >
-              Add to playlist
-            </button>
-          </div>
+          <%= if @mixtape.mixtape_songs|> Enum.map(fn song -> song.songid end)|> Enum.member?(song["id"]) do %>
+            <div>
+              <button
+                phx-click="remove_song_from_mixtape"
+                phx-value-id={song["id"]}
+                class="bg-white px-4 h-[50px]  rounded-md hover:scale-105 transition-all duration-500 cursor-pointer"
+              >
+                Remove from playlist
+              </button>
+            </div>
+          <% else %>
+            <div>
+              <button
+                phx-click="add_song_to_mixtape"
+                phx-value-id={song["id"]}
+                phx-value-name={song["name"]}
+                phx-value-artists={
+                  song["artists"] |> Enum.map(fn artist -> artist["name"] end) |> Enum.join(", ")
+                }
+                phx-value-image={hd(song["album"]["images"])["url"]}
+                class="bg-white px-4 h-[50px]  rounded-md hover:scale-105 transition-all duration-500 cursor-pointer"
+              >
+                Add to playlist
+              </button>
+            </div>
+          <% end %>
         </div>
         <p class="h-[1px] w-[100%] bg-white" />
       </div>

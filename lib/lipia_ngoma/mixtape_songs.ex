@@ -21,6 +21,27 @@ defmodule LipiaNgoma.MixtapeSongs do
     Repo.all(MixtapeSong)
   end
 
+  def get_mixtape_song_in_mixtape!(mixtape_songid, mixtape_id) do
+    Repo.one(
+      from(m in MixtapeSong, where: m.mixtape_id == ^mixtape_id and m.songid == ^mixtape_songid)
+    )
+  end
+
+  def search_mixtape_songs(query, mixtape_id) do
+    Repo.all(
+      from(m in MixtapeSong,
+        where: m.mixtape_id == ^mixtape_id
+      )
+    )
+    |> Enum.filter(fn song ->
+      String.contains?(String.downcase(song.song_name), String.downcase(query)) or
+        String.contains?(
+          String.downcase(song.artists),
+          String.downcase(query)
+        )
+    end)
+  end
+
   @doc """
   Gets a single mixtape_song.
 
