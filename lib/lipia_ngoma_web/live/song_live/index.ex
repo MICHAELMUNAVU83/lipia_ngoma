@@ -21,10 +21,8 @@ defmodule LipiaNgomaWeb.SongLive.Index do
     songs =
       if params["q"] do
         Spotify.initiate_search(params["q"])
-        |> Enum.take(5)
       else
         Spotify.initiate_search("hiphop")
-        |> Enum.take(5)
       end
 
     user = Users.get_user_by_username(params["username"])

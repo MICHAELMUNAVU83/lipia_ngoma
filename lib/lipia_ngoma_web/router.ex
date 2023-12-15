@@ -138,6 +138,8 @@ defmodule LipiaNgomaWeb.Router do
     live "/:username/mix", MixLive.Index, :index
     live "/:username/:mixtape_id/mixtape_songs", ClientMixtapeSongsLive.Index, :index
     live "/:username/:mixtape_id/cart", ClientCartLive.Index, :index
+    live "/:username/:mixtape_id/pay", ClientPayLive.Index, :index
+    live "/:username/:mixtape_id/success", ClientPayLive.Success, :index
     live "/:username/add_spotify_playlist", ClientSpotifyPlaylistLive.AddPlaylist, :index
     live "/:username/spotify_playlist/success", ClientSpotifyPlaylistLive.Success, :index
   end

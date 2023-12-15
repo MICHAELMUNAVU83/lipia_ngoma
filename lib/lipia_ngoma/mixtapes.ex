@@ -77,6 +77,12 @@ defmodule LipiaNgoma.Mixtapes do
     |> Repo.update()
   end
 
+  def update_payment_mixtape(%Mixtape{} = mixtape, attrs) do
+    mixtape
+    |> Mixtape.payment_changeset(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Deletes a mixtape.
 
@@ -104,5 +110,9 @@ defmodule LipiaNgoma.Mixtapes do
   """
   def change_mixtape(%Mixtape{} = mixtape, attrs \\ %{}) do
     Mixtape.changeset(mixtape, attrs)
+  end
+
+  def change_payment_mixtape(%Mixtape{} = mixtape, attrs \\ %{}) do
+    Mixtape.payment_changeset(mixtape, attrs)
   end
 end

@@ -1,27 +1,29 @@
-<div class="h-[78vh] overflow-y-scroll w-[90%] mx-auto">
-  <p class="text-xl my-2 text-white">
-    Search for a song then click on the song to proceed
-  </p>
-  <.form
-    let={f}
-    for={@changeset}
-    class="w-[100%] flex md:flex-row flex-col gap-3 justify-between mb-4 items-center mx-auto"
-    phx_submit="search_song"
-  >
-    <%= text_input(f, :search,
-      placeholder: "Search for a song or artist..",
-      class:
-        "md:w-[90%] w-[100%]  h-[50px] focus:ring-purple-500 focus:border-purple-500 p-2  border-2 border-gray-200 rounded-xl"
-    ) %>
-    <div class="flex justify-center items-center">
-      <%= submit("Search",
-        phx_disable_with: "Searching..",
+<div class=" w-[90%] mx-auto">
+  <div class="h-[5vh] mb-[70px]">
+    <p class="text-xl my-2 text-white">
+      Search for a song then click on the song to proceed
+    </p>
+    <.form
+      let={f}
+      for={@changeset}
+      class="w-[100%] flex md:flex-row flex-col gap-3 justify-between mb-4 items-center mx-auto"
+      phx_submit="search_song"
+    >
+      <%= text_input(f, :search,
+        placeholder: "Search for a song or artist..",
         class:
-          "bg-white px-4 h-[50px]  rounded-md hover:scale-105 transition-all duration-500 cursor-pointer"
+          "md:w-[90%] w-[100%]  h-[50px] focus:ring-purple-500 focus:border-purple-500 p-2  border-2 border-gray-200 rounded-xl"
       ) %>
-    </div>
-  </.form>
-  <div class="flex flex-col gap-2 ">
+      <div class="flex justify-center items-center">
+        <%= submit("Search",
+          phx_disable_with: "Searching..",
+          class:
+            "bg-white px-4 h-[50px]  rounded-md hover:scale-105 transition-all duration-500 cursor-pointer"
+        ) %>
+      </div>
+    </.form>
+  </div>
+  <div class="flex h-[70vh] overflow-y-scroll flex-col gap-2 ">
     <%= for song <- @songs do %>
       <%= live_redirect to: Routes.page_song_requests_path(@socket , :index , @user.username , song["id"]  ) do %>
         <div class="flex flex-col gap-1 p-2 hover:bg-[#444344]/60 transition-all ease-in-out duration-500 cursor-pointer">
