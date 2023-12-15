@@ -16,7 +16,5 @@ defmodule LipiaNgoma.Repo.Migrations.CreateSongRequests do
 
       timestamps()
     end
-
-    create unique_index(:song_requests, [:songrequestid, :user_id])
   end
 end

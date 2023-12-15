@@ -46,7 +46,6 @@ defmodule LipiaNgoma.Chpter do
         email,
         amount,
         location,
-        callback_url,
         transaction_reference
       ) do
     header = header(api_key)
@@ -58,7 +57,6 @@ defmodule LipiaNgoma.Chpter do
         name,
         location,
         amount,
-        callback_url,
         transaction_reference
       )
 
@@ -111,7 +109,6 @@ defmodule LipiaNgoma.Chpter do
          name,
          location,
          amount,
-         callback_url,
          transaction_reference
        ) do
     %{
@@ -130,7 +127,7 @@ defmodule LipiaNgoma.Chpter do
       },
       callback_details: %{
         "transaction_reference" => transaction_reference,
-        "callback_url" => callback_url
+        "callback_url" => get_api_endpoint()
       }
     }
   end
@@ -165,7 +162,8 @@ defmodule LipiaNgoma.Chpter do
   ```
   """
 
-  def check_for_payment(transaction_reference, api_endpoint) do
+  def check_for_payment(transaction_reference) do
+    api_endpoint = get_api_endpoint()
     body = HTTPoison.get!(api_endpoint)
 
     customer_record =
@@ -178,8 +176,12 @@ defmodule LipiaNgoma.Chpter do
       customer_record
     else
       Process.sleep(1000)
-      check_for_payment(transaction_reference, api_endpoint)
+      check_for_payment(transaction_reference)
     end
+  end
+
+  def get_api_endpoint do
+    "https://712e-102-135-174-116.ngrok-free.app/api/transactions"
   end
 
   @doc """

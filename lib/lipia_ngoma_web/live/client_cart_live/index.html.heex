@@ -24,10 +24,10 @@
       </div>
     </.form>
   </div>
-  <div class="flex h-[60vh] overflow-y-scroll  flex-col gap-2 ">
+  <div class="flex md:h-[60vh] h-[50vh] overflow-y-scroll  flex-col gap-2 ">
     <%= for song <- @songs do %>
       <div class="flex flex-col gap-1 p-2 hover:bg-[#444344]/60 transition-all ease-in-out duration-500 cursor-pointer">
-        <div class="flex w-[100%] justify-between">
+        <div class="flex w-[100%] md:flex-row flex-col gap-4 justify-between">
           <div class="flex gap-2 items-start">
             <img src={song.image} class="w-[60px] h-[60px]  object-cover" />
 

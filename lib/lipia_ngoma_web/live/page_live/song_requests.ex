@@ -76,8 +76,6 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
         song_request_params["phone_number"]
       )
 
-    IO.inspect(transaction_reference)
-
     case Chpter.initiate_payment(
            "pk_4aff02227456f6b499820c2621ae181c9e35666d25865575fef47622265dcbb9",
            song_request_params["phone_number"],
@@ -85,15 +83,11 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
            "test@gmail.com",
            String.to_integer(song_request_params["price"]),
            "Nairobi",
-           "https://a907-105-163-0-112.ngrok-free.app/api/transactions",
            transaction_reference
          ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         customer_record =
-          Chpter.check_for_payment(
-            transaction_reference,
-            "https://a907-105-163-0-112.ngrok-free.app/api/transactions"
-          )
+          Chpter.check_for_payment(transaction_reference)
 
         new_song_request_params =
           song_request_params
@@ -128,10 +122,7 @@ defmodule LipiaNgomaWeb.PageLive.SongRequests do
 
       {:error, %HTTPoison.Error{reason: :timeout, id: nil}} ->
         customer_record =
-          Chpter.check_for_payment(
-            transaction_reference,
-            "https://a907-105-163-0-112.ngrok-free.app/api/transactions"
-          )
+          Chpter.check_for_payment(transaction_reference)
 
         new_song_request_params =
           song_request_params

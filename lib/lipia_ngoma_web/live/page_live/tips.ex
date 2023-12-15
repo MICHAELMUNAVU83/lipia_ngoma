@@ -54,15 +54,11 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
            "test@gmail.com",
            String.to_integer(tip_params["price"]),
            "Nairobi",
-           "https://a907-105-163-0-112.ngrok-free.app/api/transactions",
            transaction_reference
          ) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         customer_record =
-          Chpter.check_for_payment(
-            transaction_reference,
-            "https://a907-105-163-0-112.ngrok-free.app/api/transactions"
-          )
+          Chpter.check_for_payment(transaction_reference)
 
         new_tip_params =
           tip_params
@@ -86,10 +82,7 @@ defmodule LipiaNgomaWeb.PageLive.Tips do
 
       {:error, %HTTPoison.Error{reason: :timeout, id: nil}} ->
         customer_record =
-          Chpter.check_for_payment(
-            transaction_reference,
-            "https://a907-105-163-0-112.ngrok-free.app/api/transactions"
-          )
+          Chpter.check_for_payment(transaction_reference)
 
         new_tip_params =
           tip_params
