@@ -52,6 +52,16 @@ defmodule LipiaNgomaWeb do
   end
 
 
+  def deejay_live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {LipiaNgomaWeb.LayoutView, "deejay.html"}
+
+      unquote(view_helpers())
+    end
+  end
+
+
   def live_view do
     quote do
       use Phoenix.LiveView,

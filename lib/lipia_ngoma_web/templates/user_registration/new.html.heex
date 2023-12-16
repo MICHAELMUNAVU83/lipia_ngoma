@@ -52,6 +52,19 @@
         </p>
       </div>
 
+      <div class="flex flex-col gap-2">
+        <%= label(f, :username, class: "text-white text-xl") %>
+        <%= select(f, :role, ["user", "deejay"],
+          prompt: "Select a role",
+          required: true,
+          class:
+            "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent"
+        ) %>
+        <p class="py-3">
+          <%= error_tag(f, :role) %>
+        </p>
+      </div>
+
       <div class="flex justify-center  text-white text-xl items-center">
         <%= submit("Register",
           phx_disable_with: "Registering...",

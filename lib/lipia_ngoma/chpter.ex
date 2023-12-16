@@ -181,7 +181,7 @@ defmodule LipiaNgoma.Chpter do
   end
 
   def get_api_endpoint do
-    "https://e9da-102-135-174-116.ngrok-free.app/api/transactions"
+    "https://64ce-102-135-174-116.ngrok-free.app/api/transactions"
   end
 
   @doc """
@@ -246,18 +246,18 @@ defmodule LipiaNgoma.Chpter do
   ```
   """
 
-  def withdraw(name, email, phone_number, amount, callback_url, payout_reference, api_key) do
+  def withdraw(name, email, phone_number, amount, payout_reference, api_key) do
     header = header(api_key)
     url = "https://api.chpter.co/v1/payout/mobile-wallet"
 
-    body = withdrawal_body(name, email, phone_number, amount, callback_url, payout_reference)
+    body = withdrawal_body(name, email, phone_number, amount, payout_reference)
 
     request_body = Jason.encode!(body)
 
     HTTPoison.post(url, request_body, header)
   end
 
-  defp withdrawal_body(name, email, phone_number, amount, callback_url, payout_reference) do
+  defp withdrawal_body(name, email, phone_number, amount, payout_reference) do
     %{
       client_details: %{
         "full_name" => name,
@@ -276,7 +276,7 @@ defmodule LipiaNgoma.Chpter do
       callback_details: %{
         "notify_customer" => true,
         "payout_reference" => payout_reference,
-        "callback_url" => callback_url
+        "callback_url" => get_api_endpoint()
       }
     }
   end

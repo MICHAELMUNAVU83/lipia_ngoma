@@ -17,22 +17,6 @@ defmodule LipiaNgomaWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", LipiaNgomaWeb do
-    pipe_through [:browser, :require_authenticated_user]
-
-    live "/tips", TipLive.Index, :index
-
-    live "/tips/:id/edit", TipLive.Index, :edit
-
-    live "/song_requests", SongRequestLive.Index, :index
-
-    live "/song_requests/:id/edit", SongRequestLive.Index, :edit
-
-    live "/payouts", PayoutLive.Index, :index
-    live "/payouts/new", PayoutLive.Index, :new
-    live "/payouts/:id/edit", PayoutLive.Index, :edit
-  end
-
   scope "/api", LipiaNgomaWeb do
     pipe_through :api
     resources "/transactions", TransactionController, except: [:new, :edit]
@@ -101,20 +85,19 @@ defmodule LipiaNgomaWeb.Router do
   end
 
   scope "/", LipiaNgomaWeb do
-    pipe_through :browser
+    pipe_through [:browser, :require_authenticated_deejay]
+    live "/profile", ProfileLive.Index, :index
+    live "/qrcode", QrLive.Index, :index
+    live "/song_requests", DeejaySongRequestLive.Index, :index
+    live "/tips", TipLive.Index, :index
 
-    live "/", HomeLive.Index, :index
-    live "/:username", PageLive.Index, :index
-    live "/:username/tips", PageLive.Tips, :index
-    live "/:username/songs", SongLive.Index, :index
-    live "/:username/:track_id/song_requests", PageLive.SongRequests, :index
+    live "/tips/:id/edit", TipLive.Index, :edit
 
-    live "/:username/tips/success", PageLive.TipSuccess, :index
-    live "/:username/song_requests/success/:song_request_id", PageLive.SongRequestsSuccess, :index
+    live "/song_requests/:id/edit", SongRequestLive.Index, :edit
 
-    live "/:username/boosts/:song_request_id", BoostLive.Index, :index
-    live "/:username/boostsuccess/:boost_id", BoostLive.Success, :index
-    live "/:username/song_requests", SongRequestLive.Index, :index
+    live "/payouts", PayoutLive.Index, :index
+    live "/payouts/new", PayoutLive.Index, :new
+    live "/payouts/:id/edit", PayoutLive.Index, :edit
   end
 
   scope "/", LipiaNgomaWeb do
@@ -131,6 +114,7 @@ defmodule LipiaNgomaWeb.Router do
 
     live "/:username/boosts/:song_request_id", BoostLive.Index, :index
     live "/:username/boostsuccess/:boost_id", BoostLive.Success, :index
+    live "/:username/song_requests", SongRequestLive.Index, :index
   end
 
   scope "/", LipiaNgomaWeb do

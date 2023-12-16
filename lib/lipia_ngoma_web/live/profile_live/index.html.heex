@@ -1,0 +1,69 @@
+<div class="h-[100%] flex flex-col p-4 gap-2">
+  <div class="flex flex-col gap-2">
+    <%= live_redirect to: Routes.home_index_path(@socket , :index) do %>
+      <img src="/images/back.png" class="w-[60px] h-[30px] object-contain" alt="" />
+    <% end %>
+    <p class="uppercase text-3xl text-white font-semibold">
+      My Profile
+    </p>
+    <p class="h-[2px] w-[100%] bg-white" />
+  </div>
+  <div class="flex justify-center flex-col txt-white pt-8 gap-4 items-center">
+    <img src="/images/djtip.png" class="w-[150px] h-[150px] object-cover" />
+
+    <p class="uppercase">
+      Hello <%= @current_user.username %>
+    </p>
+
+    <div class="h-[60vh]  w-[100%] flex flex-col gap-4 overflow-y-scroll">
+      <%= live_redirect to: Routes.deejay_song_request_index_path(@socket , :index) do %>
+        <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
+          <p>
+            Song Requests
+          </p>
+
+          <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
+        </div>
+      <% end %>
+      <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
+        <p>
+          Dashboard
+        </p>
+
+        <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
+      </div>
+      <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
+        <p>
+          Balance and Withdraw
+        </p>
+
+        <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
+      </div>
+
+      <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
+        <p>
+          Mix Requests
+        </p>
+
+        <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
+      </div>
+      <%= live_redirect to: Routes.qr_index_path(@socket , :index) do %>
+        <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
+          <p>
+            Get QR Code
+          </p>
+
+          <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
+        </div>
+      <% end %>
+
+      <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
+        <p>
+          Settings
+        </p>
+
+        <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
+      </div>
+    </div>
+  </div>
+</div>

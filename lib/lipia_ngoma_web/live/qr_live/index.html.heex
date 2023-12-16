@@ -1,0 +1,41 @@
+<div class="h-[100%]    p-4 gap-2">
+  <div class="flex w-[100%] flex-col gap-2">
+    <%= live_redirect to: Routes.profile_index_path(@socket , :index) do %>
+      <img src="/images/back.png" class="w-[60px] h-[30px] object-contain" alt="" />
+    <% end %>
+    <p class="uppercase text-3xl text-white font-semibold">
+      My Qr Code
+    </p>
+    <p class="h-[2px] w-[100%] bg-white" />
+  </div>
+
+  <div class="flex flex-col justify-center items-center h-[60vh]">
+    <p class="text-white">
+      This is the qr code to your page , download it and share it with your friends
+    </p>
+    <div class="  p-2  flex flex-col  w-[300px] justify-center  items-center  ">
+      <div phx-hook="QrCode" id="qrcode" class="bg-white p-6 rounded-md  " />
+    </div>
+
+    <button class="bg-[#3B0359] flex gap-2 items-center text-white  rounded-md p-2 ">
+      Download QRCode
+    </button>
+
+    <div class="flex w-[100%]   justify-center gap-8" phx-hook="Copy" id="copy">
+      <input
+        class="copyable p-2 rounded-md w-[80%]  "
+        type="text"
+        disabled
+        value={
+          "https://lipiangoma.co.ke/" <>
+            "#{@current_user.username}"
+        }
+      />
+      <button class="clipboardCopy bg-[#3B0359] flex gap-2 items-center text-white  rounded-md p-2 ">
+        Copy
+      </button>
+    </div>
+  </div>
+
+  <input type="text" id="text" value={@current_user.username} style="display:none;" />
+</div>

@@ -9,6 +9,8 @@ defmodule LipiaNgoma.Users.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    field :role, :string, default: "user"
+    field :status, :string, default: "active"
 
     has_many :song_requests, LipiaNgoma.SongRequests.SongRequest
     has_many :tips, LipiaNgoma.Tips.Tip
@@ -37,7 +39,7 @@ defmodule LipiaNgoma.Users.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password, :username, :verified])
+    |> cast(attrs, [:email, :password, :username, :verified, :role, :status])
     |> unique_constraint(:username, message: "This name is taken")
     |> validate_email()
     |> validate_password(opts)

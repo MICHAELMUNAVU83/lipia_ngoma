@@ -1,0 +1,55 @@
+<div class="flex p-4 flex-col gap-2">
+  <%= live_redirect to: Routes.profile_index_path(@socket , :index) do %>
+    <img src="/images/back.png" class="w-[60px] h-[30px] object-contain" alt="" />
+  <% end %>
+  <p class="uppercase text-3xl text-white font-semibold">
+    Song Requests
+  </p>
+  <p class="h-[2px] w-[100%] bg-white" />
+  <div class="flex md:h-[70vh] h-[60vh] overflow-y-scroll flex-col gap-2 ">
+    <%= for {song, index} <- Enum.with_index(@songs) do %>
+      <div class="flex flex-col gap-1 p-2 hover:bg-[#444344]/60 transition-all ease-in-out duration-500 cursor-pointer">
+        <div class="flex w-[100%] md:flex-row flex-col gap-4 justify-between">
+          <div class="flex gap-2 items-start">
+            <p class="text-xl text-white">
+              <%= index + 1 %>
+            </p>
+
+            <img src={song.image} class="w-[60px] h-[60px]  object-cover" />
+
+            <div class="flex flex-col text-white gap-2">
+              <p>
+                <%= song.song_name %>
+              </p>
+              <div class="flex gap-1 items-center">
+                <%= song.artists %>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex md:flex-col flex-row justify-between gap-4">
+            <%= link("Accept And Play",
+              to: "#",
+              phx_click: "accept",
+              phx_value_id: song.id,
+              data: [confirm: "Are you sure?"],
+              class:
+                "px-4 py-2 rounded-md hover:scale-105 flex justify-center items-center text-white transition-all ease-in-out duration-500 bg-green-500"
+            ) %>
+
+            <%= link("Reject",
+              to: "#",
+              phx_click: "reject",
+              phx_value_id: song.id,
+              data: [confirm: "Are you sure?"],
+              phx_disable_with: "Processing...",
+              class:
+                "px-4 py-2 rounded-md hover:scale-105 flex justify-center items-center text-white transition-all ease-in-out duration-500 bg-red-500"
+            ) %>
+          </div>
+        </div>
+        <p class="h-[1px] w-[100%] bg-white" />
+      </div>
+    <% end %>
+  </div>
+</div>
