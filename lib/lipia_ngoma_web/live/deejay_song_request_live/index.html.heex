@@ -6,6 +6,26 @@
     Song Requests
   </p>
   <p class="h-[2px] w-[100%] bg-white" />
+  <.form
+    let={f}
+    for={@changeset}
+    class="w-[100%] flex md:flex-row flex-col gap-3 justify-between mb-4 items-center mx-auto"
+    phx_submit="search_song_request"
+    phx_change="search_song_request"
+  >
+    <%= text_input(f, :search,
+      placeholder: "Search for a song request..",
+      class:
+        "md:w-[90%] w-[100%]  h-[50px] focus:ring-purple-500 focus:border-purple-500 p-2  border-2 border-gray-200 rounded-xl"
+    ) %>
+    <div class="flex justify-center items-center">
+      <%= submit("Search",
+        phx_disable_with: "Searching..",
+        class:
+          "bg-white px-4 h-[50px]  rounded-md hover:scale-105 transition-all duration-500 cursor-pointer"
+      ) %>
+    </div>
+  </.form>
   <div class="flex md:h-[70vh] h-[60vh] overflow-y-scroll flex-col gap-2 ">
     <%= for {song, index} <- Enum.with_index(@songs) do %>
       <div class="flex flex-col gap-1 p-2 hover:bg-[#444344]/60 transition-all ease-in-out duration-500 cursor-pointer">

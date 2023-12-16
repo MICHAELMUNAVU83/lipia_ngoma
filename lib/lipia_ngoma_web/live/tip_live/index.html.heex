@@ -1,4 +1,11 @@
-<div class="h-[78vh] overflow-y-scroll w-[90%] mx-auto">
+<div class=" w-[90%] mx-auto">
+  <%= live_redirect to: Routes.profile_index_path(@socket , :index) do %>
+    <img src="/images/back.png" class="w-[60px] h-[30px] object-contain" alt="" />
+  <% end %>
+  <p class="uppercase text-3xl text-white font-semibold">
+    Tips
+  </p>
+  <p class="h-[2px] w-[100%] bg-white" />
   <p class="text-xl my-2 text-white">
     Search for a tip by name or number
   </p>
@@ -22,7 +29,7 @@
       ) %>
     </div>
   </.form>
-  <div class="flex flex-col gap-2 ">
+  <div class="flex h-[50vh] overflow-y-scroll flex-col gap-2 ">
     <%= for tip <- @tips do %>
       <div class="flex text-white flex-col gap-1 p-2 hover:bg-[#444344]/60 transition-all ease-in-out duration-500 cursor-pointer">
         <div class="w-[100%] flex justify-between items-start">
@@ -36,7 +43,7 @@
           </div>
 
           <p>
-            <%= tip.price %>
+            KES <%= tip.price %> /=
           </p>
         </div>
         <p class="h-[1px] w-[100%] bg-white" />

@@ -28,7 +28,7 @@ defmodule LipiaNgomaWeb.TipLive.Index do
         list_tips(socket.assigns.user.id)
       end
 
-    IO.inspect(tips)
+    
 
     socket
     |> assign(:page_title, "Listing Tips")

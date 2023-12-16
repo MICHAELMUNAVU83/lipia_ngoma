@@ -89,6 +89,8 @@ defmodule LipiaNgomaWeb.Router do
     live "/profile", ProfileLive.Index, :index
     live "/qrcode", QrLive.Index, :index
     live "/song_requests", DeejaySongRequestLive.Index, :index
+    live "/balance", DeejayBalanceLive.Index, :index
+
     live "/tips", TipLive.Index, :index
 
     live "/tips/:id/edit", TipLive.Index, :edit

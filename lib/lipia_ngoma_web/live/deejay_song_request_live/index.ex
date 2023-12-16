@@ -2,18 +2,34 @@ defmodule LipiaNgomaWeb.DeejaySongRequestLive.Index do
   use LipiaNgomaWeb, :deejay_live_view
   alias LipiaNgoma.Users
   alias LipiaNgoma.SongRequests
+  alias LipiaNgoma.SongRequests.SongRequest
   alias LipiaNgoma.Chpter
 
   def mount(_params, session, socket) do
     current_user =
       Users.get_user_by_session_token(session["user_token"])
 
-    songs = SongRequests.list_song_requests_for_a_user(current_user.id)
-
     {:ok,
      socket
      |> assign(:current_user, current_user)
-     |> assign(:songs, songs)}
+     |> assign(:changeset, SongRequests.change_song_request(%SongRequest{}))}
+  end
+
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, :index, params) do
+    songs =
+      if params["q"] do
+        SongRequests.search(params["q"], socket.assigns.current_user.id)
+      else
+        SongRequests.list_song_requests_for_a_user(socket.assigns.current_user.id)
+      end
+
+    socket
+    |> assign(:page_title, "Listing Song Requests")
+    |> assign(:songs, songs)
   end
 
   def handle_event("accept", %{"id" => id}, socket) do
@@ -51,7 +67,6 @@ defmodule LipiaNgomaWeb.DeejaySongRequestLive.Index do
 
         songs = SongRequests.list_song_requests_for_a_user(socket.assigns.current_user.id)
 
-
         # send sms here
 
         {:noreply,
@@ -69,14 +84,11 @@ defmodule LipiaNgomaWeb.DeejaySongRequestLive.Index do
          socket
          |> put_flash(:error, "Payout Failed")}
     end
+  end
 
-    # {:ok, _} = SongRequests.update_song_request(song_request, %{is_played: true})
-
-    # songs = SongRequests.list_song_requests_for_a_user(socket.assigns.current_user.id)
-
-    # {:noreply,
-    #  socket
-    #  |> assign(:songs, songs)
-    #  |> put_flash(:info, "Song request accepted")}
+  def handle_event("search_song_request", params, socket) do
+    {:noreply,
+     socket
+     |> push_patch(to: "/song_requests/?q=#{params["song_request"]["search"]}")}
   end
 end
