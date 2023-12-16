@@ -90,12 +90,11 @@ defmodule LipiaNgomaWeb.Router do
     live "/qrcode", QrLive.Index, :index
     live "/song_requests", DeejaySongRequestLive.Index, :index
     live "/balance", DeejayBalanceLive.Index, :index
+    live "/balance/withdrawal_history", DeejayBalanceLive.WithdrawalHistory, :index
+    live "/balance/withdraw", DeejayBalanceLive.Withdraw, :index
+    live "/balance/withdraw/success/:payout_id", DeejayBalanceLive.Success, :index
 
     live "/tips", TipLive.Index, :index
-
-    live "/tips/:id/edit", TipLive.Index, :edit
-
-    live "/song_requests/:id/edit", SongRequestLive.Index, :edit
 
     live "/payouts", PayoutLive.Index, :index
     live "/payouts/new", PayoutLive.Index, :new

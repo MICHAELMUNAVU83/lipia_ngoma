@@ -21,7 +21,7 @@ defmodule LipiaNgoma.Payouts do
     Repo.all(Payout)
   end
 
-  def list_payouts_for_a_usr(id) do
+  def list_payouts_for_a_user(id) do
     Repo.all(from p in Payout, where: p.user_id == ^id)
   end
 

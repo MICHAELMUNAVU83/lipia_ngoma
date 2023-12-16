@@ -1,3 +1,60 @@
-<div>
-  ghj
+<div class="h-[100%] flex flex-col p-4 gap-2">
+  <div class="flex flex-col gap-2">
+    <%= live_redirect to: Routes.home_index_path(@socket , :index) do %>
+      <img src="/images/back.png" class="w-[60px] h-[30px] object-contain" alt="" />
+    <% end %>
+    <p class="uppercase text-3xl text-white font-semibold">
+      Balance and Withdraw
+    </p>
+    <p class="h-[2px] w-[100%] bg-white" />
+  </div>
+  <div class="w-[100%] border-[2px] rounded-md text-3xl text-white flex py-4 justify-center items-center flex-col">
+    <p>
+      Balance
+    </p>
+    <p class="font-bold">
+      KSHS 0.00
+    </p>
+  </div>
+  <div class="w-[100%] flex justify-center items-center">
+    <%= live_redirect to: Routes.deejay_balance_withdraw_path(@socket , :index) do %>
+      <div class="border-2 border-[#FFFFFF] uppercase text-white rounded-md p-2 hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer">
+        withdraw
+      </div>
+    <% end %>
+  </div>
+
+  <div class="flex pt-6 text-white flex-col gap-2">
+    <p class="uppercase text-3xl text-white font-semibold">
+      Summary
+    </p>
+    <p class="h-[2px] w-[100%] bg-white" />
+    <p>
+      Amount from Song Requests - KSHS 0.00
+    </p>
+    <p>
+      Amount from Tips - KSHS 0.00
+    </p>
+    <p>
+      Amount from Mix Requests - KSHS 0.00
+    </p>
+    <p>
+      Amount Withdrawn - KSHS 0.00
+    </p>
+    <p>
+      Service Fee - KSHS 0.00
+    </p>
+
+    <p>
+      Balance - KSHS 0.00
+    </p>
+  </div>
+
+  <div class="flex pt-8 justify-center items-center">
+    <%= live_redirect to: Routes.deejay_balance_withdrawal_history_path(@socket , :index) do %>
+      <div class="uppercase text-white underline  cursor-pointer">
+        See Withdrawal History
+      </div>
+    <% end %>
+  </div>
 </div>

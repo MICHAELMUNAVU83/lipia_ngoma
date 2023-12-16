@@ -82,7 +82,7 @@
     </.form>
     <div class="flex justify-center items-center">
       <p class="text-white uppercase underline text-xl">
-        <%= live_redirect to: Routes.song_index_path(@socket , :index, @user.username) do %>
+        <%= live_redirect to: Routes.client_cart_index_path(@socket, :index , @user.username, @mixtape.id) do %>
           back
         <% end %>
       </p>

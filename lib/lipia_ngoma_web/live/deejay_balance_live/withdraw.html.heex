@@ -1,0 +1,59 @@
+<div class="h-[100%] flex flex-col p-4 gap-2">
+  <div class="flex flex-col gap-2">
+    <%= live_redirect to: Routes.deejay_balance_index_path(@socket , :index) do %>
+      <img src="/images/back.png" class="w-[60px] h-[30px] object-contain" alt="" />
+    <% end %>
+    <p class="uppercase text-3xl text-white font-semibold">
+      Withdraw
+    </p>
+    <p class="h-[2px] w-[100%] bg-white" />
+  </div>
+
+  <.form
+    let={f}
+    for={@changeset}
+    id="song_request-form"
+    class="h-[90%] w-[100%]  flex flex-col"
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <p class="text-white">
+      Fill in this form to withdraw your money
+    </p>
+    <%= hidden_input(f, :user_id, value: @current_user.id) %>
+    <%= hidden_input(f, :name, value: @current_user.username) %>
+    <%= hidden_input(f, :payoutid, value: @current_user.id) %>
+
+    <div class="flex flex-col gap-2">
+      <%= label(f, :phone_number, class: "text-white text-xl") %>
+      <%= text_input(f, :phone_number,
+        class:
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+        placeholder: "Enter your phone number"
+      ) %>
+      <p class="py-2">
+        <%= error_tag(f, :phone_number) %>
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <%= label(f, :price, class: "text-white text-xl") %>
+      <%= number_input(f, :amount,
+        class:
+          "w-[100%] rounded-md  h-[50px] focus:outline-none focus:ring-2 focus:ring-[#8816AC] focus:border-transparent",
+        placeholder: "Enter the amount you want to pay "
+      ) %>
+      <p class="py-2">
+        <%= error_tag(f, :price) %>
+      </p>
+    </div>
+
+    <div class="flex justify-center  text-white text-xl items-center">
+      <%= submit("Withdraw",
+        phx_disable_with: "Processing...",
+        class:
+          "border-2 border-[#FFFFFF] rounded-3xl p-2 hover:scale-105 transition-all ease-in-out duration-500 cursor-pointer"
+      ) %>
+    </div>
+  </.form>
+</div>
