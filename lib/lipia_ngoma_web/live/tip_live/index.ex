@@ -1,5 +1,5 @@
 defmodule LipiaNgomaWeb.TipLive.Index do
-  use LipiaNgomaWeb, :live_view
+  use LipiaNgomaWeb, :deejay_live_view
 
   alias LipiaNgoma.Tips
   alias LipiaNgoma.Users
@@ -27,8 +27,6 @@ defmodule LipiaNgomaWeb.TipLive.Index do
       else
         list_tips(socket.assigns.user.id)
       end
-
-    
 
     socket
     |> assign(:page_title, "Listing Tips")

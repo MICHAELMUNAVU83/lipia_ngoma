@@ -35,13 +35,21 @@
         </p>
       <% end %>
 
-      <%!-- <%= link to: Routes.song_request_index_path(@socket , :index), class: "flex flex-col items-center justify-center " do %>
+      <%= link to: Routes.deejay_song_request_index_path(@socket , :index), class: "flex flex-col items-center justify-center " do %>
         <img src="/images/line.png" class="h-[28px] w-[28px] object-contain" />
 
         <p class="text-white">
           Song Requests
         </p>
-      <% end %> --%>
+      <% end %>
+
+      <%= link to: Routes.profile_index_path(@socket , :index), class: "flex flex-col items-center justify-center " do %>
+        <img src="/images/profile.png" class="h-[28px] w-[28px] object-contain" />
+
+        <p class="text-white">
+          Profile
+        </p>
+      <% end %>
     </div>
   </div>
 </main>
