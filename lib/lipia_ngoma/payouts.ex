@@ -25,6 +25,14 @@ defmodule LipiaNgoma.Payouts do
     Repo.all(from p in Payout, where: p.user_id == ^id)
   end
 
+  def get_money_withdrawn_by_a_dj(id) do
+    Repo.one(
+      from p in Payout,
+        where: p.user_id == ^id,
+        select: coalesce(sum(p.amount), 0)
+    )
+  end
+
   @doc """
   Gets a single payout.
 

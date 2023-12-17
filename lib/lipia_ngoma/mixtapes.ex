@@ -25,6 +25,18 @@ defmodule LipiaNgoma.Mixtapes do
     Repo.all(from(m in Mixtape, where: m.client_id == ^client_id))
   end
 
+  def get_mixtapes_for_a_dj(dj_id) do
+    Repo.all(from(m in Mixtape, where: m.dj_id == ^dj_id))
+  end
+
+  def get_mixtape_money_for_a_dj(id) do
+    Repo.one(
+      from m in Mixtape,
+        where: m.dj_id == ^id,
+        select: coalesce(sum(m.price), 0)
+    )
+  end
+
   @doc """
   Gets a single mixtape.
 

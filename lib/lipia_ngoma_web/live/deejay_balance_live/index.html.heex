@@ -13,7 +13,7 @@
       Balance
     </p>
     <p class="font-bold">
-      KSHS 0.00
+      KSHS <%= @money_in_wallet %> /=
     </p>
   </div>
   <div class="w-[100%] flex justify-center items-center">
@@ -30,23 +30,23 @@
     </p>
     <p class="h-[2px] w-[100%] bg-white" />
     <p>
-      Amount from Song Requests - KSHS 0.00
+      Amount from Song Requests - KSHS <%= @song_requests %> /=
     </p>
     <p>
-      Amount from Tips - KSHS 0.00
+      Amount from Tips -  KSHS <%= @tips %> /=
     </p>
     <p>
-      Amount from Mix Requests - KSHS 0.00
+      Amount from Mix Requests -  KSHS <%= @spotify_playlists + @mixtapes %> /=
     </p>
     <p>
-      Amount Withdrawn - KSHS 0.00
+      Amount Withdrawn - KSHS <%= @money_withdrawn %> /=
     </p>
     <p>
-      Service Fee - KSHS 0.00
+      Service Fee - KSHS <%= @commission %> /=
     </p>
 
     <p>
-      Balance - KSHS 0.00
+      Balance - KSHS <%= @money_in_wallet %> /=
     </p>
   </div>
 

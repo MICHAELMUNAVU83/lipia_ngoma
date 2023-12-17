@@ -9,13 +9,13 @@
     <p class="h-[2px] w-[100%] bg-white" />
   </div>
   <div class="flex justify-center text-white flex-col txt-white pt-8 gap-4 items-center">
-    <img src="/images/djtip.png" class="w-[150px] h-[150px] object-cover" />
+    <img src="/images/djtip.png" class="w-[100px] h-[100px] object-cover" />
 
     <p class="uppercase">
       Hello <%= @current_user.username %>
     </p>
 
-    <div class="h-[50vh]  w-[100%] flex flex-col gap-4 overflow-y-scroll">
+    <div class="h-[45vh]  w-[100%] flex flex-col gap-4 overflow-y-scroll">
       <%= live_redirect to: Routes.deejay_song_request_index_path(@socket , :index) do %>
         <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
           <p>

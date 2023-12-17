@@ -25,6 +25,10 @@ defmodule LipiaNgoma.Tips do
     Repo.all(from t in Tip, where: t.user_id == ^id)
   end
 
+  def list_tips_amount_for_a_user(id) do
+    Repo.one(from t in Tip, where: t.user_id == ^id, select: coalesce(sum(t.price), 0))
+  end
+
   def search_tips(query, id) do
     if query == "" || query == nil do
       list_tips_for_a_user(id)

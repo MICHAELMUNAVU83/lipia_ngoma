@@ -27,6 +27,15 @@ defmodule LipiaNgoma.SongRequests do
     |> Enum.filter(fn song_request -> song_request.is_refunded == false end)
   end
 
+  def get_total_song_request_money_for_a_user(id) do
+    Repo.one(
+      from s in SongRequest,
+        where: s.user_id == ^id,
+        where: s.is_played == true and s.is_refunded == false,
+        select: coalesce(sum(s.price), 0)
+    )
+  end
+
   def get_eventual_song_position(amount, id) do
     array =
       list_song_requests_for_a_user(id)

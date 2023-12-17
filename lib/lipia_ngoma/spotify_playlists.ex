@@ -21,6 +21,18 @@ defmodule LipiaNgoma.SpotifyPlaylists do
     Repo.all(SpotifyPlaylist)
   end
 
+  def get_spotify_playlists_for_a_user(id) do
+    Repo.all(from s in SpotifyPlaylist, where: s.dj_id == ^id)
+  end
+
+  def get_total_spotify_playlist_money_for_a_user(id) do
+    Repo.one(
+      from s in SpotifyPlaylist,
+        where: s.dj_id == ^id,
+        select: coalesce(sum(s.price), 0)
+    )
+  end
+
   @doc """
   Gets a single spotify_playlist.
 
