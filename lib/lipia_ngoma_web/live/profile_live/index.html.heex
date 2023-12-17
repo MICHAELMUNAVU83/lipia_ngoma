@@ -67,14 +67,15 @@
           <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
         </div>
       <% end %>
+      <%= live_redirect  to: Routes.user_settings_path(@socket, :edit) do %>
+        <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
+          <p>
+            Settings
+          </p>
 
-      <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
-        <p>
-          Settings
-        </p>
-
-        <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
-      </div>
+          <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
