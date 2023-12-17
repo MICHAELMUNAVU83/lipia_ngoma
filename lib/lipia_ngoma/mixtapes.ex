@@ -26,13 +26,14 @@ defmodule LipiaNgoma.Mixtapes do
   end
 
   def get_mixtapes_for_a_dj(dj_id) do
-    Repo.all(from(m in Mixtape, where: m.dj_id == ^dj_id))
+    Repo.all(from(m in Mixtape, where: m.dj_id == ^dj_id and m.status != "pending"))
   end
 
   def get_mixtape_money_for_a_dj(id) do
     Repo.one(
       from m in Mixtape,
         where: m.dj_id == ^id,
+        where: m.status != "pending",
         select: coalesce(sum(m.price), 0)
     )
   end

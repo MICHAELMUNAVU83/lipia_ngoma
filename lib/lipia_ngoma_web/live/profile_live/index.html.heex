@@ -26,13 +26,15 @@
         </div>
       <% end %>
 
-      <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
-        <p>
-          Dashboard
-        </p>
+      <%= live_redirect to: Routes.deejay_dashboard_index_path(@socket , :index) do %>
+        <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
+          <p>
+            Dashboard
+          </p>
 
-        <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
-      </div>
+          <img src="/images/back.png" class="w-[60px] rotate-180 h-[20px]  object-contain" alt="" />
+        </div>
+      <% end %>
       <%= live_redirect to: Routes.tip_index_path(@socket , :index) do %>
         <div class="flex w-[100%] bg-[#3B0359] items-center p-4 text-white text-xl shadow-md rounded-md shadow-black justify-between">
           <p>

@@ -29,15 +29,6 @@ defmodule LipiaNgomaWeb.Router do
   # If your application does not have an admins-only section yet,
   # you can use Plug.BasicAuth to set up some basic authentication
   # as long as you are also using SSL (which you should anyway).
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
-
-    scope "/" do
-      pipe_through :browser
-
-      live_dashboard "/dashboard", metrics: LipiaNgomaWeb.Telemetry
-    end
-  end
 
   # Enables the Swoosh mailbox preview in development.
   #
@@ -93,12 +84,8 @@ defmodule LipiaNgomaWeb.Router do
     live "/balance/withdrawal_history", DeejayBalanceLive.WithdrawalHistory, :index
     live "/balance/withdraw", DeejayBalanceLive.Withdraw, :index
     live "/balance/withdraw/success/:payout_id", DeejayBalanceLive.Success, :index
-
     live "/tips", TipLive.Index, :index
-
-    live "/payouts", PayoutLive.Index, :index
-    live "/payouts/new", PayoutLive.Index, :new
-    live "/payouts/:id/edit", PayoutLive.Index, :edit
+    live "/dashboard", DeejayDashboardLive.Index, :index
   end
 
   scope "/", LipiaNgomaWeb do

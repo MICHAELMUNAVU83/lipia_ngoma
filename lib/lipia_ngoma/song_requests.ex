@@ -36,6 +36,12 @@ defmodule LipiaNgoma.SongRequests do
     )
   end
 
+  def list_completed_song_requests_for_a_user(id) do
+    Repo.all(from s in SongRequest, where: s.user_id == ^id, order_by: [desc: s.price])
+    |> Enum.filter(fn song_request -> song_request.is_played == true end)
+    |> Enum.filter(fn song_request -> song_request.is_refunded == false end)
+  end
+
   def get_eventual_song_position(amount, id) do
     array =
       list_song_requests_for_a_user(id)
