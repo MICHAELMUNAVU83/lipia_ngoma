@@ -1,6 +1,7 @@
 defmodule LipiaNgoma.Payouts.Payout do
   use Ecto.Schema
   import Ecto.Changeset
+  alias LipiaNgoma.Dashboard
 
   schema "payouts" do
     field :name, :string

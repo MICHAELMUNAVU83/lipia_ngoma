@@ -67,6 +67,12 @@ defmodule LipiaNgoma.Payouts do
     |> Repo.insert()
   end
 
+  def create_dj_payment(attrs \\ %{}, user_id) do
+    %Payout{}
+    |> Payout.payout_changeset(attrs, user_id)
+    |> Repo.insert()
+  end
+
   @doc """
   Updates a payout.
 
