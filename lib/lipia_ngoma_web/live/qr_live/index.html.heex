@@ -9,21 +9,29 @@
     <p class="h-[2px] w-[100%] bg-white" />
   </div>
 
-  <div class="flex flex-col justify-center items-center h-[60vh]">
-    <p class="text-white">
+  <div
+    phx-hook="DownloadQrCode"
+    id="qrImg"
+    class="flex flex-col justify-center items-center h-[60vh]"
+  >
+    <p class="text-white text-center">
       This is the qr code to your page , download it and share it with your friends
     </p>
     <div class="  p-2  flex flex-col  w-[300px] justify-center  items-center  ">
-      <div phx-hook="QrCode" id="qrcode" class="bg-white p-6 rounded-md  " />
+      <div phx-hook="QrCode" id="qrcode" class="bg-white p-6 qrcode rounded-md  " />
     </div>
 
-    <button class="bg-[#3B0359] flex gap-2  my-4 items-center text-white  rounded-md p-2 ">
+    <button class="bg-[#3B0359] downloadqrcode flex gap-2  my-4 items-center text-white  rounded-md p-2 ">
       Download QRCode
     </button>
 
-    <div class="flex w-[100%]   justify-center gap-8" phx-hook="Copy" id="copy">
+    <div
+      class="flex w-[100%] md:flex-row flex-col  justify-center gap-8"
+      phx-hook="Copy"
+      id="copy"
+    >
       <input
-        class="copyable p-2 rounded-md w-[80%]  "
+        class="copyable p-2 rounded-md md:w-[80%]  w-[100%] "
         type="text"
         disabled
         value={
@@ -31,7 +39,7 @@
             "#{@current_user.username}"
         }
       />
-      <button class="clipboardCopy bg-[#3B0359] flex gap-2 items-center text-white  rounded-md p-2 ">
+      <button class="clipboardCopy bg-[#3B0359] flex gap-2 justify-center  items-center text-white  rounded-md p-2 ">
         Copy
       </button>
     </div>

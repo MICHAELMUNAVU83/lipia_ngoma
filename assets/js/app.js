@@ -99,6 +99,61 @@ Hooks.Copy = {
   },
 };
 
+Hooks.DownloadQrCode = {
+  mounted() {
+    var elText = document.getElementById("text");
+    const button = document.querySelector(".downloadqrcode");
+    const div = document.querySelector(".qrcode");
+
+    button.addEventListener("click", function () {
+      html2canvas(div).then((canvas) => {
+        const imageDataURL = canvas.toDataURL("image/png");
+
+        // Create a download link for the image
+        const a = document.createElement("a");
+        a.href = imageDataURL;
+        a.download = elText.value + ".png";
+        a.click();
+
+        Toastify({
+          text: "Downloaded as " + elText.value + ".png",
+          className: "info",
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+          duration: 2000,
+        }).showToast();
+      });
+    });
+  },
+  updated() {
+    var elText = document.getElementById("text");
+    const button = document.querySelector(".downloadqrcode");
+    const div = document.querySelector(".qrcode");
+
+    button.addEventListener("click", function () {
+      html2canvas(div).then((canvas) => {
+        const imageDataURL = canvas.toDataURL("image/png");
+
+        // Create a download link for the image
+        const a = document.createElement("a");
+        a.href = imageDataURL;
+        a.download = elText.value + ".png";
+        a.click();
+        Toastify({
+          text: "Downloaded as " + elText.value + ".png",
+          className: "info",
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+          duration: 2000,
+        }).showToast();
+      });
+    });
+   
+  },
+};
+
 // Show progress bar on live navigation and form submits
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
 window.addEventListener("phx:page-loading-start", (info) => topbar.show());
