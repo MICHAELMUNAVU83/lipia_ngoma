@@ -61,11 +61,27 @@ defmodule LipiaNgoma.Spotify do
     end
   end
 
+  def get_playlist(playlist_id) do
+    header = header()
+
+    url =
+      "https://api.spotify.com/v1/playlists/#{playlist_id}/tracks"
+
+    case HTTPoison.get(url, header, []) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        tracks =
+          body
+          |> Jason.decode!()
+
+        tracks
+    end
+  end
+
   defp header do
     [
       {
         "Authorization",
-        "Bearer BQCv6d_V1-yHkqtUgMPIIwHCW9V1IZQLDWGPp3Gr5zGVKdqffEjW93HN2So09sMEmgCxPHORC4kET5Snw_iA-u9anyBdWCJEdWg8Sjyej-cs9R9zZ9w"
+        "Bearer BQDFR2eaIN-lAA9rOu-9KZeZYdfgde5_-eX9dex74kJYeun-HeIUGSuQjzxTxRq8bQo8erfvfiqorUzvmZFMsSG0-AjQa0TBRCFP9JY6I5SXJy-rhaM"
       }
     ]
   end
